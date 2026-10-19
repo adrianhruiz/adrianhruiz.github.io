@@ -1,0 +1,933 @@
+/* Palette: https://www.color-hex.com/color-palette/95744 (+ P3R red for hover) */
+:root {
+  --sky: #79d7fd;
+  --cyan: #00bbfa;
+  --night: #001736;
+  --night-2: #00183e;
+  --gold: #ffc54a;
+  --red: #e8202a;
+  --white: #ffffff;
+
+  --font-display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --font-body: 'Barlow', system-ui, sans-serif;
+  --tilt: -8deg;
+  --ease-snap: cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: var(--night);
+  color: var(--white);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ---------- Screen layout ---------- */
+
+.screen {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  /* clip (not hidden) so the sticky menu follows the page scroll */
+  overflow: clip;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    'wallet wallet'
+    'menu   panel';
+  gap: 1rem 3rem;
+  padding: 2rem clamp(1rem, 4vw, 4rem) 1.5rem;
+  background: var(--night);
+}
+
+/* ---------- Ocean background ---------- */
+
+.ocean {
+  /* Fixed, so the water stays put while long pages scroll */
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  --dive: 1.4s cubic-bezier(0.6, 0, 0.2, 1);
+}
+
+/* A tall water column; changing --depth slides the camera up or down it.
+   The top quarter matches the Persona 3 Reload pause menu: bright cyan at the
+   surface fading into saturated ultramarine. */
+.ocean-column {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 400%;
+  background: linear-gradient(
+    180deg,
+    #13faff 0%,
+    #0bcafc 3%,
+    #0f94fe 5.25%,
+    #0468d1 8.75%,
+    #004ac1 12.25%,
+    #0022b7 19%,
+    #0000af 25%,
+    #00008c 60%,
+    #000060 100%
+  );
+  transform: translateY(calc(var(--depth) * -20%));
+  transition: transform var(--dive);
+}
+
+/* Rippling light patches of the surface (canvas, see WaterSurface.jsx) */
+.water-surface {
+  position: absolute;
+  inset: 0 0 auto;
+  width: 100%;
+  height: 38%;
+  mask-image: linear-gradient(to bottom, black 55%, transparent);
+  opacity: calc(1 - var(--depth) * 1.6);
+  transform: translateY(calc(var(--depth) * -40vh));
+  transition:
+    opacity var(--dive),
+    transform var(--dive);
+}
+
+/* Low-res canvas (see Bubbles.jsx), upscaled like the water surface */
+.bubbles {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------- Load splash ---------- */
+
+/* Starts white and is pulled up and away, its lower edge broken into
+   round splashes, uncovering the water */
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  background: var(--white);
+  pointer-events: none;
+  animation: splash 0.9s cubic-bezier(0.6, 0, 0.3, 1) 0.15s both;
+}
+
+.splash::after {
+  content: '';
+  position: absolute;
+  inset: 100% -5% auto;
+  height: 22vh;
+  background:
+    radial-gradient(circle at 8% 0, var(--white) 0 9vh, transparent 9.2vh),
+    radial-gradient(circle at 24% 0, var(--white) 0 14vh, transparent 14.2vh),
+    radial-gradient(circle at 41% 0, var(--white) 0 7vh, transparent 7.2vh),
+    radial-gradient(circle at 57% 0, var(--white) 0 16vh, transparent 16.2vh),
+    radial-gradient(circle at 74% 0, var(--white) 0 8vh, transparent 8.2vh),
+    radial-gradient(circle at 90% 0, var(--white) 0 12vh, transparent 12.2vh);
+}
+
+@keyframes splash {
+  to {
+    transform: translateY(-125%);
+  }
+}
+
+/* ---------- Name, top left ---------- */
+
+.wallet {
+  grid-area: wallet;
+  justify-self: start;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+  line-height: 1.1;
+  color: var(--night);
+}
+
+.wallet-name {
+  font: italic 800 2.4rem / 1 var(--font-display);
+  text-transform: uppercase;
+}
+
+
+/* ---------- Section change wipe ---------- */
+
+.wipe {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  /* Keep the sweep subtle: the page stays visible through the bands */
+  opacity: 0.12;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.wipe-band {
+  position: absolute;
+  top: -20%;
+  bottom: -20%;
+  left: 0;
+  /* Soft edges, so the sweep reads as a shift in light rather than lines */
+  filter: blur(40px);
+  will-change: transform;
+  animation: wipe 0.8s cubic-bezier(0.7, 0, 0.25, 1) both;
+}
+
+.wipe-band--blue {
+  width: 45vw;
+  background: #0a7fd6;
+}
+
+.wipe-band--cyan {
+  width: 4vw;
+  background: var(--cyan);
+  animation-delay: 0.05s;
+}
+
+.wipe-band--navy {
+  width: 30vw;
+  background: var(--night);
+  animation-delay: 0.09s;
+}
+
+.wipe--back .wipe-band {
+  animation-name: wipe-back;
+}
+
+@keyframes wipe {
+  from {
+    transform: translateX(-75vw) skewX(-20deg);
+  }
+  to {
+    transform: translateX(140vw) skewX(-20deg);
+  }
+}
+
+@keyframes wipe-back {
+  from {
+    transform: translateX(140vw) skewX(-20deg);
+  }
+  to {
+    transform: translateX(-75vw) skewX(-20deg);
+  }
+}
+
+/* ---------- Content panel ---------- */
+
+.panel {
+  grid-area: panel;
+  align-self: center;
+  position: relative;
+  z-index: 1;
+  justify-self: center;
+  width: 100%;
+  max-width: 52rem;
+  /* Starts while the wipe bands are passing over it */
+  animation: panel-in 0.35s var(--ease-snap) 0.18s both;
+}
+
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: translateX(2rem) skewX(-6deg);
+  }
+}
+
+/* The menu already shows the current section, so the heading is only kept
+   for screen readers */
+.panel-title {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Box with the same look as the project cards. The background lives in a
+   pseudo-element so the slanted edge doesn't clip what is inside. */
+.card {
+  position: relative;
+  isolation: isolate;
+  padding: 1.4rem 2rem 1.5rem 1.5rem;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgb(0 23 54 / 0.65);
+  border-left: 4px solid var(--cyan);
+  clip-path: polygon(0 0, 100% 0, calc(100% - 1rem) 100%, 0 100%);
+  backdrop-filter: blur(4px);
+}
+
+.muted {
+  color: rgb(255 255 255 / 0.6);
+}
+
+.about {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 2.5rem;
+}
+
+.about-photo {
+  width: clamp(10rem, 16vw, 15rem);
+  aspect-ratio: 1;
+  object-fit: cover;
+  border: 4px solid var(--white);
+  box-shadow: 6px 6px 0 #02060d;
+  transform: rotate(var(--tilt));
+}
+
+.about-sections {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.timeline {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.timeline li {
+  padding-left: 1rem;
+  border-left: 2px solid rgb(121 215 253 / 0.35);
+}
+
+.timeline-role {
+  margin: 0;
+  font: italic 900 1.4rem / 1.15 var(--font-display);
+  text-transform: uppercase;
+  color: var(--sky);
+}
+
+.timeline-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.2rem 0.6rem;
+  margin: 0.2rem 0 0.35rem;
+  font: italic 700 1rem / 1.3 var(--font-display);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.timeline-dates {
+  padding: 0 0.55rem;
+  background: var(--white);
+  color: var(--night);
+  font-size: 0.85rem;
+  transform: skewX(-12deg);
+}
+
+.timeline-text {
+  margin: 0;
+  max-width: 40rem;
+  color: rgb(255 255 255 / 0.88);
+}
+
+.prose p {
+  font-size: 1.15rem;
+  max-width: 38rem;
+}
+
+/* ---------- Command menu (P3R style) ---------- */
+
+.menu {
+  grid-area: menu;
+  /* Stays vertically centred in the viewport while long content scrolls */
+  align-self: start;
+  position: sticky;
+  top: max(2rem, calc(50vh - 9rem));
+  z-index: 1;
+}
+
+.menu li {
+  /* Stagger items to the right, like the in-game menu */
+  margin-left: calc(var(--i) * 0.8rem);
+  margin-top: -0.1rem;
+}
+
+.menu-item {
+  display: inline-block;
+  padding: 0 0.3em;
+  font: italic 900 clamp(2.2rem, 4.5vw, 3.8rem) / 1 var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  color: var(--sky);
+  opacity: 0.85;
+  text-shadow: 0 3px 0 rgb(0 23 54 / 0.6);
+  transform: rotate(var(--tilt));
+  transition:
+    color 0.12s,
+    opacity 0.12s,
+    transform 0.18s var(--ease-snap),
+    text-shadow 0.12s;
+}
+
+/* ---------- Red slash highlight, shared by menu and links ---------- */
+
+.menu-item span,
+.slash-hover :is(a, button) span {
+  position: relative;
+  z-index: 0;
+}
+
+.menu-item span::before,
+.slash-hover :is(a, button) span::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 22% -12% 18% -6%;
+  background: var(--red);
+  clip-path: polygon(6% 0, 100% 0, 94% 100%, 0 100%);
+  transform: scaleX(0) skewY(-4deg);
+  transform-origin: left center;
+  transition: transform 0.16s var(--ease-snap);
+}
+
+.menu-item:hover,
+.menu-item:focus-visible,
+.menu-item[aria-current='page'] {
+  color: var(--night);
+  opacity: 1;
+  transform: rotate(var(--tilt)) scale(1.12) translateX(0.3rem);
+  text-shadow: 3px 3px 0 var(--white);
+}
+
+.menu-item:hover span::before,
+.menu-item:focus-visible span::before,
+.menu-item[aria-current='page'] span::before,
+.slash-hover :is(a, button):hover span::before,
+.slash-hover :is(a, button):focus-visible span::before {
+  transform: scaleX(1) skewY(-4deg);
+}
+
+/* While pointing at another item, only that one is highlighted */
+.menu:hover .menu-item[aria-current='page']:not(:hover) {
+  color: var(--sky);
+  opacity: 0.85;
+  transform: rotate(var(--tilt));
+  text-shadow: 0 3px 0 rgb(0 23 54 / 0.6);
+}
+
+.menu:hover .menu-item[aria-current='page']:not(:hover) span::before {
+  transform: scaleX(0) skewY(-4deg);
+}
+
+.menu-item:focus-visible,
+.slash-hover :is(a, button):focus-visible {
+  outline: none;
+}
+
+/* ---------- Projects ---------- */
+
+.project-list {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.project {
+  padding: 1rem 1.25rem 1.1rem;
+  background: rgb(0 23 54 / 0.65);
+  border-left: 4px solid var(--cyan);
+  clip-path: polygon(0 0, 100% 0, calc(100% - 1rem) 100%, 0 100%);
+  backdrop-filter: blur(4px);
+  transition: border-color 0.15s;
+}
+
+.project:hover {
+  border-color: var(--red);
+}
+
+.project-image {
+  display: block;
+  width: 100%;
+  max-height: 14rem;
+  object-fit: cover;
+  /* Screenshots: show the top of the page */
+  object-position: top;
+  margin-bottom: 0.8rem;
+}
+
+.project h2 {
+  margin: 0 0 0.3rem;
+  font: italic 900 clamp(1.4rem, 5vw, 2rem) / 1.1 var(--font-display);
+  text-transform: uppercase;
+}
+
+.slash-hover :is(a, button) {
+  text-decoration: none;
+  color: var(--sky);
+  transition: color 0.12s;
+}
+
+.slash-hover :is(a, button):hover,
+.slash-hover :is(a, button):focus-visible {
+  color: var(--night);
+}
+
+.project p {
+  margin: 0 0 0.75rem;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.tags li {
+  padding: 0.05rem 0.6rem;
+  font: 700 0.85rem / 1.5 var(--font-display);
+  text-transform: uppercase;
+  color: var(--night);
+  background: var(--gold);
+  transform: skewX(-12deg);
+}
+
+.project {
+  position: relative;
+  cursor: pointer;
+}
+
+.project-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 0.25rem !important;
+  font: italic 700 1rem / 1.3 var(--font-display);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--sky);
+}
+
+.status {
+  padding: 0 0.55rem;
+  background: var(--white);
+  color: var(--night);
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  transform: skewX(-12deg);
+}
+
+.project-open {
+  font: inherit;
+  text-transform: inherit;
+  text-align: left;
+}
+
+/* The whole card opens the project sheet */
+.project-open::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+/* ---------- Project sheet (Social Link style header) ---------- */
+
+.detail {
+  display: grid;
+  gap: 1.2rem;
+  scroll-margin-top: 1rem;
+  animation: detail-in 0.35s var(--ease-snap);
+}
+
+.detail > * {
+  min-width: 0;
+}
+
+@keyframes detail-in {
+  from {
+    opacity: 0;
+    transform: translateX(2rem);
+  }
+}
+
+.detail-back {
+  justify-self: start;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font: italic 700 1.3rem / 1 var(--font-display);
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+.detail-back:hover,
+.detail-back:focus-visible {
+  color: var(--gold);
+  outline: none;
+}
+
+.detail-back kbd {
+  padding: 0.1rem 0.4rem;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  font: 700 0.75rem / 1.2 var(--font-display);
+}
+
+.chevron {
+  font-size: 1.4em;
+  color: var(--red);
+}
+
+.detail-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 0 1rem;
+  padding: 1.6rem 2rem 0.8rem 1.6rem;
+  background: var(--white);
+  color: var(--night);
+  clip-path: polygon(0 0, 100% 0, calc(100% - 1.5rem) 100%, 0 100%);
+}
+
+.detail-tag {
+  position: absolute;
+  top: 0.45rem;
+  left: 1rem;
+  padding: 0.05rem 0.6rem;
+  background: #02060d;
+  color: var(--white);
+  font: italic 700 0.8rem / 1.4 var(--font-display);
+  text-transform: uppercase;
+  transform: rotate(-6deg);
+}
+
+.detail-title {
+  margin: 0;
+  font: italic 500 clamp(1.6rem, 6vw, 3.2rem) / 1 var(--font-display);
+}
+
+.detail-year {
+  grid-row: span 2;
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.detail-year-label {
+  padding-bottom: 0.7rem;
+  font: italic 900 1.3rem / 1 var(--font-display);
+  text-transform: uppercase;
+}
+
+.detail-year-value {
+  font: italic 900 clamp(3.2rem, 6vw, 4.8rem) / 0.85 var(--font-display);
+}
+
+.detail-description {
+  margin: 0;
+  font-size: 1.15rem;
+  max-width: 44rem;
+}
+
+.detail-label {
+  margin: 0 0 0.5rem;
+  font: italic 900 1.4rem / 1 var(--font-display);
+  text-transform: uppercase;
+}
+
+.detail-text {
+  margin: 0 0 0.8rem;
+  max-width: 44rem;
+  color: rgb(255 255 255 / 0.9);
+}
+
+.detail-list {
+  display: grid;
+  gap: 0.35rem;
+  max-width: 18rem;
+}
+
+.detail-list li {
+  padding: 0.2rem 1rem;
+  background: rgb(0 23 54 / 0.85);
+  color: var(--sky);
+  font: 500 1.2rem / 1.3 var(--font-display);
+  text-align: center;
+}
+
+.detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  padding-bottom: 1rem;
+  font: italic 900 2rem / 1 var(--font-display);
+  text-transform: uppercase;
+}
+
+/* ---------- Media gallery ---------- */
+
+.gallery {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.gallery-main {
+  margin: 0;
+}
+
+.media-frame {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  border: 0;
+  background: rgb(0 23 54 / 0.85);
+  outline: 3px solid var(--white);
+  box-shadow: 6px 6px 0 var(--night);
+}
+
+.gallery-main figcaption {
+  margin-top: 0.5rem;
+  font: italic 500 1rem var(--font-display);
+  color: rgb(255 255 255 / 0.8);
+}
+
+.gallery-thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.gallery-thumb {
+  position: relative;
+  display: block;
+  width: 6.5rem;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  outline: 2px solid rgb(255 255 255 / 0.4);
+  opacity: 0.7;
+  transition:
+    opacity 0.1s,
+    outline-color 0.1s,
+    transform 0.12s var(--ease-snap);
+}
+
+.gallery-thumb img,
+.gallery-thumb video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+/* Play badge on video thumbnails */
+.gallery-thumb--video::after {
+  content: '▶';
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--white);
+  font-size: 1.2rem;
+  text-shadow: 0 1px 4px rgb(0 0 0 / 0.6);
+}
+
+.gallery-thumb:hover,
+.gallery-thumb:focus-visible,
+.gallery-thumb[aria-current='true'] {
+  opacity: 1;
+  outline: 3px solid var(--white);
+  transform: translateY(-2px);
+}
+
+.gallery-thumb[aria-current='true'] {
+  box-shadow: 4px -4px 0 var(--red);
+}
+
+/* ---------- Contact ---------- */
+
+.contact {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.contact {
+  gap: 1rem;
+}
+
+.contact .card {
+  padding: 1rem 2rem 1.1rem 1.5rem;
+}
+
+.contact li {
+  display: grid;
+  justify-items: start;
+  font: italic 900 clamp(2rem, 5vw, 3rem) / 1.1 var(--font-display);
+  text-transform: uppercase;
+}
+
+.contact-detail {
+  font: 500 1rem / 1.4 var(--font-body);
+  text-transform: none;
+  color: rgb(255 255 255 / 0.8);
+  overflow-wrap: anywhere;
+}
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 760px) {
+  .screen {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      'wallet'
+      'panel';
+    /* Bottom padding leaves room for the fixed menu bar */
+    padding: 1rem 1rem calc(7rem + env(safe-area-inset-bottom));
+    /* Breathing room between the name and the content */
+    gap: 1.5rem;
+  }
+
+  /* Smaller name */
+  .wallet-name {
+    font-size: 1.8rem;
+  }
+
+
+  /* The menu becomes a bottom bar, always within thumb reach */
+  .menu {
+    position: fixed;
+    inset: auto 0 0;
+    top: auto;
+    z-index: 6;
+    padding: 1.2rem 0.5rem calc(0.9rem + env(safe-area-inset-bottom));
+    background: rgb(0 23 54 / 0.88);
+    backdrop-filter: blur(6px);
+    clip-path: polygon(0 0.6rem, 100% 0, 100% 100%, 0 100%);
+  }
+
+  .menu ul {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .menu li {
+    margin: 0;
+  }
+
+  /* Taller items: an easy target for the thumb */
+  .menu-item {
+    padding-block: 0.35rem;
+    font-size: clamp(1.35rem, 6.5vw, 1.75rem);
+  }
+
+  .menu-item:hover,
+  .menu-item:focus-visible,
+  .menu-item[aria-current='page'] {
+    transform: rotate(var(--tilt)) scale(1.08);
+  }
+
+  /* Photo above the text */
+  .about {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+
+  .about-photo {
+    grid-row: 1;
+    width: 9rem;
+    margin: 0.5rem 0 0 0.5rem;
+  }
+
+  .panel {
+    align-self: start;
+  }
+
+  /* Compact project sheet */
+  .detail {
+    gap: 1rem;
+  }
+
+  .detail-card {
+    padding: 1.5rem 1.6rem 0.7rem 1rem;
+  }
+
+  .detail-year-label {
+    padding-bottom: 0.4rem;
+    font-size: 1rem;
+  }
+
+  .detail-year-value {
+    font-size: 2.6rem;
+  }
+
+  .detail-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    max-width: none;
+  }
+
+  .detail-list li {
+    padding: 0.1rem 0.8rem;
+    font-size: 1rem;
+  }
+
+  .gallery-thumbs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 0.3rem 0.3rem 0.5rem;
+    scrollbar-width: thin;
+  }
+
+  .gallery-thumbs li {
+    flex: none;
+  }
+
+  .gallery-thumb {
+    width: 5rem;
+  }
+
+  .detail-actions {
+    font-size: 1.6rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

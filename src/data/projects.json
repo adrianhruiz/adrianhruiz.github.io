@@ -1,0 +1,29 @@
+[
+  {
+    "title": "Diagon Cafe",
+    "year": 2026,
+    "status": "Live",
+    "description": "Website for Diagon Cafe, a specialty coffee shop with board games in Cala Rajada (Mallorca). A single page where visitors can browse the menu with allergens, discover the board games, see photos of the venue and find the contact details, in Spanish, English, German and Catalan. It is prerendered for search engines, optimises its images at build time and loads nothing from third parties, so it needs no cookie banner.",
+    "tags": ["react", "vite", "vitest", "i18n", "seo"],
+    "url": "https://adrianhruiz.github.io/cafediagon/",
+    "repo": "https://github.com/adrianhruiz/cafediagon",
+    "image": "projects/cafediagon-1.jpg",
+    "media": [
+      { "src": "projects/cafediagon-1.jpg", "caption": "Landing page" },
+      { "src": "projects/cafediagon-2.jpg", "caption": "About the cafe" },
+      { "src": "projects/cafediagon-3.jpg", "caption": "Menu with categories and allergens" },
+      { "src": "projects/cafediagon-4.jpg", "caption": "Photo gallery" }
+    ]
+  },
+  {
+    "title": "MedicApp",
+    "year": 2026,
+    "status": "Personal use",
+    "description": "Native Android app to look up medicines in CIMA, the public database of the Spanish Agency of Medicines (AEMPS), log the doses taken, flag allergies and schedule dose reminders. User data is stored with Firebase Auth and Firestore. It keeps working when CIMA or the network fail thanks to caching, retries and a circuit breaker, and makes a daily backup that can be exported and restored.",
+    "tags": ["kotlin", "jetpack compose", "firebase", "firestore", "android"],
+    "url": "",
+    "repo": "https://github.com/adrianhruiz/mediapp",
+    "image": "",
+    "media": []
+  }
+]
