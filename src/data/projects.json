@@ -3,8 +3,8 @@
     "title": "Diagon Cafe",
     "year": 2026,
     "status": "Live",
-    "description": "Website for Diagon Cafe, a specialty coffee shop with board games in Cala Rajada (Mallorca). A single page where visitors can browse the menu with allergens, discover the board games, see photos of the venue and find the contact details, in Spanish, English, German and Catalan. It is prerendered for search engines, optimises its images at build time and loads nothing from third parties, so it needs no cookie banner.",
-    "tags": ["react", "vite", "vitest", "i18n", "seo"],
+    "description": "Website for Diagon Cafe, a board game coffee shop in Cala Rajada (Mallorca), with its menu, games, photos and contact details in four languages.",
+    "tags": ["react", "web performance", "seo", "accessibility"],
     "url": "https://adrianhruiz.github.io/cafediagon/",
     "repo": "https://github.com/adrianhruiz/cafediagon",
     "image": "projects/cafediagon-1.jpg",
@@ -19,11 +19,11 @@
     "title": "MedicApp",
     "year": 2026,
     "status": "Personal use",
-    "description": "Native Android app to look up medicines in CIMA, the public database of the Spanish Agency of Medicines (AEMPS), log the doses taken, flag allergies and schedule dose reminders. User data is stored with Firebase Auth and Firestore. It keeps working when CIMA or the network fail thanks to caching, retries and a circuit breaker, and makes a daily backup that can be exported and restored.",
-    "tags": ["kotlin", "jetpack compose", "firebase", "firestore", "android"],
+    "description": "Android app to save your medicines, organise them with dose reminders and keep track of your allergies, warning you when a medicine may not be suitable for you. A digital pill organiser on steroids.",
+    "tags": ["kotlin", "firebase", "android"],
     "url": "",
     "repo": "https://github.com/adrianhruiz/mediapp",
-    "image": "",
+    "image": ["projects/medicapp-1.jpg", "projects/medicapp-2.jpg", "projects/medicapp-3.jpg"],
     "media": []
   }
 ]

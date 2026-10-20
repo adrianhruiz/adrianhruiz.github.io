@@ -300,7 +300,7 @@ ul {
 .about {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  align-items: start;
+  align-items: center;
   gap: 2.5rem;
 }
 
@@ -316,6 +316,12 @@ ul {
 .about-sections {
   display: grid;
   gap: 1.5rem;
+}
+
+.detail-label {
+  margin: 0 0 0.5rem;
+  font: italic 900 1.4rem / 1 var(--font-display);
+  text-transform: uppercase;
 }
 
 .timeline {
@@ -521,6 +527,16 @@ ul {
   transform: skewX(-12deg);
 }
 
+.tags-sm {
+  gap: 0.3rem;
+  margin: 0.5rem 0 0;
+}
+
+.tags-sm li {
+  padding: 0.05rem 0.5rem;
+  font-size: 0.76rem;
+}
+
 .project {
   position: relative;
   cursor: pointer;
@@ -550,228 +566,58 @@ ul {
   font: inherit;
   text-transform: inherit;
   text-align: left;
+  color: inherit;
+  text-decoration: none;
 }
 
-/* The whole card opens the project sheet */
+/* Slides stack in one grid cell and cross-fade */
+.carousel {
+  position: relative;
+  /* Above the card-wide link overlay so clicks reach the carousel */
+  z-index: 1;
+  display: grid;
+  margin-bottom: 0.8rem;
+}
+
+.carousel-slide {
+  grid-area: 1 / 1;
+  margin-bottom: 0;
+  opacity: 0;
+  transition: opacity 0.6s;
+}
+
+.carousel-slide[data-active='true'] {
+  opacity: 1;
+}
+
+.carousel-dots {
+  position: absolute;
+  right: 0.6rem;
+  bottom: 0.6rem;
+  display: flex;
+  gap: 0.4rem;
+}
+
+.carousel-dots button {
+  width: 0.6rem;
+  height: 0.6rem;
+  padding: 0;
+  border: 2px solid var(--white);
+  background: transparent;
+  transform: skewX(-12deg);
+  cursor: pointer;
+}
+
+.carousel-dots button[aria-current='true'] {
+  background: var(--gold);
+  border-color: var(--gold);
+}
+
+/* The whole card links to the project repo */
 .project-open::after {
   content: '';
   position: absolute;
   inset: 0;
-}
-
-/* ---------- Project sheet (Social Link style header) ---------- */
-
-.detail {
-  display: grid;
-  gap: 1.2rem;
-  scroll-margin-top: 1rem;
-  animation: detail-in 0.35s var(--ease-snap);
-}
-
-.detail > * {
-  min-width: 0;
-}
-
-@keyframes detail-in {
-  from {
-    opacity: 0;
-    transform: translateX(2rem);
-  }
-}
-
-.detail-back {
-  justify-self: start;
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  font: italic 700 1.3rem / 1 var(--font-display);
-  text-transform: uppercase;
-  color: var(--white);
-}
-
-.detail-back:hover,
-.detail-back:focus-visible {
-  color: var(--gold);
-  outline: none;
-}
-
-.detail-back kbd {
-  padding: 0.1rem 0.4rem;
-  border: 1.5px solid currentColor;
-  border-radius: 999px;
-  font: 700 0.75rem / 1.2 var(--font-display);
-}
-
-.chevron {
-  font-size: 1.4em;
-  color: var(--red);
-}
-
-.detail-card {
-  position: relative;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: end;
-  gap: 0 1rem;
-  padding: 1.6rem 2rem 0.8rem 1.6rem;
-  background: var(--white);
-  color: var(--night);
-  clip-path: polygon(0 0, 100% 0, calc(100% - 1.5rem) 100%, 0 100%);
-}
-
-.detail-tag {
-  position: absolute;
-  top: 0.45rem;
-  left: 1rem;
-  padding: 0.05rem 0.6rem;
-  background: #02060d;
-  color: var(--white);
-  font: italic 700 0.8rem / 1.4 var(--font-display);
-  text-transform: uppercase;
-  transform: rotate(-6deg);
-}
-
-.detail-title {
-  margin: 0;
-  font: italic 500 clamp(1.6rem, 6vw, 3.2rem) / 1 var(--font-display);
-}
-
-.detail-year {
-  grid-row: span 2;
-  display: flex;
-  align-items: flex-end;
-  gap: 0.5rem;
-}
-
-.detail-year-label {
-  padding-bottom: 0.7rem;
-  font: italic 900 1.3rem / 1 var(--font-display);
-  text-transform: uppercase;
-}
-
-.detail-year-value {
-  font: italic 900 clamp(3.2rem, 6vw, 4.8rem) / 0.85 var(--font-display);
-}
-
-.detail-description {
-  margin: 0;
-  font-size: 1.15rem;
-  max-width: 44rem;
-}
-
-.detail-label {
-  margin: 0 0 0.5rem;
-  font: italic 900 1.4rem / 1 var(--font-display);
-  text-transform: uppercase;
-}
-
-.detail-text {
-  margin: 0 0 0.8rem;
-  max-width: 44rem;
-  color: rgb(255 255 255 / 0.9);
-}
-
-.detail-list {
-  display: grid;
-  gap: 0.35rem;
-  max-width: 18rem;
-}
-
-.detail-list li {
-  padding: 0.2rem 1rem;
-  background: rgb(0 23 54 / 0.85);
-  color: var(--sky);
-  font: 500 1.2rem / 1.3 var(--font-display);
-  text-align: center;
-}
-
-.detail-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 1.5rem;
-  padding-bottom: 1rem;
-  font: italic 900 2rem / 1 var(--font-display);
-  text-transform: uppercase;
-}
-
-/* ---------- Media gallery ---------- */
-
-.gallery {
-  display: grid;
-  gap: 0.6rem;
-}
-
-.gallery-main {
-  margin: 0;
-}
-
-.media-frame {
-  display: block;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: contain;
-  border: 0;
-  background: rgb(0 23 54 / 0.85);
-  outline: 3px solid var(--white);
-  box-shadow: 6px 6px 0 var(--night);
-}
-
-.gallery-main figcaption {
-  margin-top: 0.5rem;
-  font: italic 500 1rem var(--font-display);
-  color: rgb(255 255 255 / 0.8);
-}
-
-.gallery-thumbs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-}
-
-.gallery-thumb {
-  position: relative;
-  display: block;
-  width: 6.5rem;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-  outline: 2px solid rgb(255 255 255 / 0.4);
-  opacity: 0.7;
-  transition:
-    opacity 0.1s,
-    outline-color 0.1s,
-    transform 0.12s var(--ease-snap);
-}
-
-.gallery-thumb img,
-.gallery-thumb video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  pointer-events: none;
-}
-
-/* Play badge on video thumbnails */
-.gallery-thumb--video::after {
-  content: '▶';
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  color: var(--white);
-  font-size: 1.2rem;
-  text-shadow: 0 1px 4px rgb(0 0 0 / 0.6);
-}
-
-.gallery-thumb:hover,
-.gallery-thumb:focus-visible,
-.gallery-thumb[aria-current='true'] {
-  opacity: 1;
-  outline: 3px solid var(--white);
-  transform: translateY(-2px);
-}
-
-.gallery-thumb[aria-current='true'] {
-  box-shadow: 4px -4px 0 var(--red);
 }
 
 /* ---------- Contact ---------- */
@@ -871,55 +717,6 @@ ul {
 
   .panel {
     align-self: start;
-  }
-
-  /* Compact project sheet */
-  .detail {
-    gap: 1rem;
-  }
-
-  .detail-card {
-    padding: 1.5rem 1.6rem 0.7rem 1rem;
-  }
-
-  .detail-year-label {
-    padding-bottom: 0.4rem;
-    font-size: 1rem;
-  }
-
-  .detail-year-value {
-    font-size: 2.6rem;
-  }
-
-  .detail-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    max-width: none;
-  }
-
-  .detail-list li {
-    padding: 0.1rem 0.8rem;
-    font-size: 1rem;
-  }
-
-  .gallery-thumbs {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    padding: 0.3rem 0.3rem 0.5rem;
-    scrollbar-width: thin;
-  }
-
-  .gallery-thumbs li {
-    flex: none;
-  }
-
-  .gallery-thumb {
-    width: 5rem;
-  }
-
-  .detail-actions {
-    font-size: 1.6rem;
   }
 }
 

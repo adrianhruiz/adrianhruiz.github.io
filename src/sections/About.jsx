@@ -7,25 +7,21 @@ const EXPERIENCE = [
     role: 'Software Developer',
     place: 'Tecnalis',
     dates: 'Jul 2021 – Present',
-    text: 'Full-time full stack development, working with Java and Linux among other technologies.',
+    text: 'Development of Alira, a gaming management platform used by online gaming and sports betting operators.',
+    tags: ['Java', 'SQL', 'Linux', 'AI Tools', 'Performance', 'Testing'],
   },
   {
-    role: 'Web Developer Intern',
-    place: 'Suertia Interactiva',
+    role: 'Software Developer Intern',
+    place: 'Suertia',
     dates: 'Apr 2021 – Jun 2021',
-    text: 'Front-end layout and JavaScript for the company website, some back-end fixes, and a project to make several pages responsive.',
+    text: 'Web development for an online gaming and betting operator.',
+    tags: ['JavaScript', 'PHP', 'Responsive Web Design'],
   },
   {
-    role: 'IT Technician Intern',
-    place: 'VistaJet',
-    dates: 'May 2019 – Jun 2019',
-    text: 'Erasmus+ internship: support, repair and maintenance of the employees’ computers.',
-  },
-  {
-    role: 'IT Technician Intern',
-    place: 'Zbitt',
-    dates: 'Mar 2019 – Apr 2019',
-    text: 'Repair and maintenance of customers’ computers at a computer store.',
+    role: 'IT Helpdesk Intern',
+    place: 'Zbitt & VistaJet',
+    dates: 'Mar 2019 – Jun 2019',
+    text: 'Support, repair and maintenance of devices for customers and employees.',
   },
 ]
 
@@ -34,13 +30,15 @@ const EDUCATION = [
     role: 'Higher Vocational Training in Web Application Development',
     place: 'IES Puertas del Campo',
     dates: '2019 – 2021',
-    text: 'Front end including HTML, CSS, responsive design, Flexbox, Grid, Bootstrap and modern JavaScript. Backend including Java, PHP, OOP, MVC and relational databases (MySQL, SQLite). Deployment with Apache, Tomcat and Docker.',
+    text: 'Studies focused on web development, where I learned everything I needed to build a video game e-commerce site as my final project.',
+    tags: ['JavaScript', 'Java', 'PHP', 'SQL', 'Docker'],
   },
   {
     role: 'Intermediate Vocational Training in Microcomputer Systems and Networks',
     place: 'IES Puertas del Campo',
     dates: '2017 – 2019',
-    text: 'Hardware and operating system installation, maintenance, monitoring, backups, Bash scripting and virtual machines.',
+    text: 'Studies on how computers work in a broad sense. This is where I started programming, through scripting.',
+    tags: ['Linux', 'Scripting', 'Apache', 'Tomcat'],
   },
 ]
 
@@ -55,7 +53,14 @@ function Timeline({ title, items }) {
             <p className="timeline-meta">
               {item.place} <span className="timeline-dates">{item.dates}</span>
             </p>
-            <p className="timeline-text">{item.text}</p>
+            {item.text && <p className="timeline-text">{item.text}</p>}
+            {item.tags?.length > 0 && (
+              <ul className="tags tags-sm">
+                {item.tags.map((tag) => (
+                  <li key={tag}>{tag}</li>
+                ))}
+              </ul>
+            )}
           </li>
         ))}
       </ul>
@@ -69,15 +74,14 @@ export default function About() {
       <div className="about card">
         <div className="prose">
           <p>
-            Hi! I'm a <b>software developer</b> based in Ceuta, Spain, and I've always loved
-            computers and video games.
+            Hi! I'm a <b>software developer</b> based in Ceuta, Spain. I fell in love with
+            computers as a kid, and I spend a lot of time in this digital world.
           </p>
           <p>
-            I've been working at Tecnalis since 2021, where I develop software mostly in Java.
-            In my free time, I build personal projects with AI tools.
+            Here you'll find information about me and the personal projects I'm working on.
           </p>
         </div>
-        <img className="about-photo" src={asset('photo.jpg')} alt={profile.name} />
+        <img className="about-photo" src={asset('photo.webp')} alt={profile.name} />
       </div>
 
       <Timeline title="Experience" items={EXPERIENCE} />
