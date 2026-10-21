@@ -131,14 +131,15 @@ ul {
 /* ---------- Load splash ---------- */
 
 /* Starts white and is pulled up and away, its lower edge broken into
-   round splashes, uncovering the water */
+   round splashes, uncovering the water. Hidden unless it can be animated
+   (see the motion block at the end), so it can never cover the page. */
 .splash {
+  display: none;
   position: fixed;
   inset: 0;
   z-index: 10;
   background: var(--white);
   pointer-events: none;
-  animation: splash 0.9s cubic-bezier(0.6, 0, 0.3, 1) 0.15s both;
 }
 
 .splash::after {
@@ -182,7 +183,9 @@ ul {
 
 /* ---------- Section change wipe ---------- */
 
+/* Hidden unless it can be animated, like the splash */
 .wipe {
+  display: none;
   position: absolute;
   inset: 0;
   z-index: 5;
@@ -200,7 +203,6 @@ ul {
   /* Soft edges, so the sweep reads as a shift in light rather than lines */
   filter: blur(40px);
   will-change: transform;
-  animation: wipe 0.8s cubic-bezier(0.7, 0, 0.25, 1) both;
 }
 
 .wipe-band--blue {
@@ -211,17 +213,11 @@ ul {
 .wipe-band--cyan {
   width: 4vw;
   background: var(--cyan);
-  animation-delay: 0.05s;
 }
 
 .wipe-band--navy {
   width: 30vw;
   background: var(--night);
-  animation-delay: 0.09s;
-}
-
-.wipe--back .wipe-band {
-  animation-name: wipe-back;
 }
 
 @keyframes wipe {
@@ -252,8 +248,6 @@ ul {
   justify-self: center;
   width: 100%;
   max-width: 52rem;
-  /* Starts while the wipe bands are passing over it */
-  animation: panel-in 0.35s var(--ease-snap) 0.18s both;
 }
 
 @keyframes panel-in {
@@ -726,5 +720,43 @@ ul {
   *::after {
     animation: none !important;
     transition: none !important;
+  }
+
+}
+
+/* Animations that hide content until they finish (the splash covers the
+   page, the panel fades in from transparent). They are only enabled when the
+   browser explicitly reports no motion preference, so the page is visible by
+   default: with reduced motion, an unsupported media query or any other case
+   where the animation would not run. */
+@media (prefers-reduced-motion: no-preference) {
+  .splash {
+    display: block;
+    animation: splash 0.9s cubic-bezier(0.6, 0, 0.3, 1) 0.15s both;
+  }
+
+  .wipe {
+    display: block;
+  }
+
+  .wipe-band {
+    animation: wipe 0.8s cubic-bezier(0.7, 0, 0.25, 1) both;
+  }
+
+  .wipe-band--cyan {
+    animation-delay: 0.05s;
+  }
+
+  .wipe-band--navy {
+    animation-delay: 0.09s;
+  }
+
+  .wipe--back .wipe-band {
+    animation-name: wipe-back;
+  }
+
+  .panel {
+    /* Starts while the wipe bands are passing over it */
+    animation: panel-in 0.35s var(--ease-snap) 0.18s both;
   }
 }
