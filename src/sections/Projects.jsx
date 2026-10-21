@@ -16,7 +16,7 @@ export default function Projects() {
             <ProjectCarousel images={project.image} />
           ) : (
             project.image && (
-              <img className="project-image" src={asset(project.image)} alt="" loading="lazy" />
+              <img className="project-image" src={asset(project.image)} alt="" />
             )
           )}
           {(project.year || project.status) && (

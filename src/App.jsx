@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import profile from './data/profile.json'
 import Menu from './components/Menu.jsx'
 import Ocean from './components/Ocean.jsx'
 import Wipe from './components/Wipe.jsx'
+import preloadProjectImages from './preloadProjectImages.js'
 import Projects from './sections/Projects.jsx'
 import About from './sections/About.jsx'
 import Contact from './sections/Contact.jsx'
@@ -20,6 +21,12 @@ export default function App() {
   const [direction, setDirection] = useState(0)
   const current = SECTIONS.find((s) => s.id === active)
   const { Component } = current
+
+  // Once the first screen is done, fetch what the other sections will need
+  useEffect(() => {
+    const idle = window.requestIdleCallback ?? ((fn) => setTimeout(fn, 200))
+    idle(preloadProjectImages)
+  }, [])
 
   function select(id) {
     if (id === active) return

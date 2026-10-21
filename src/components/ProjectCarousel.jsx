@@ -32,7 +32,6 @@ export default function ProjectCarousel({ images }) {
           className="project-image carousel-slide"
           src={asset(src)}
           alt=""
-          loading="lazy"
           aria-hidden={index !== current}
           data-active={index === current}
         />
