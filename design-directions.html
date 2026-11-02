@@ -1,0 +1,642 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Portfolio Directions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;1,600;1,700;1,800&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  /* Shared tokens inherited from the Persona 3 Reload palette */
+  :root {
+    --sky: #79d7fd;
+    --cyan: #00bbfa;
+    --night: #001736;
+    --abyss: #000c1f;
+    --gold: #ffc54a;
+    --white: #ffffff;
+    --font-display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+    --font-body: 'Barlow', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { font-family: var(--font-body); line-height: 1.6; -webkit-font-smoothing: antialiased; background: var(--abyss); }
+  img { display: block; max-width: 100%; }
+  ul { list-style: none; margin: 0; padding: 0; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+  .variant { display: none; min-height: 100vh; }
+  .variant.is-active { display: block; }
+
+  /* ---------- Direction switcher ---------- */
+  .switcher {
+    position: fixed; z-index: 100; left: 50%; bottom: 16px; transform: translateX(-50%);
+    display: flex; gap: 4px; padding: 4px; border-radius: 999px;
+    background: rgba(10, 14, 22, .88); backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,.12); box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    max-width: calc(100vw - 32px); overflow-x: auto;
+  }
+  .switcher button {
+    font: 500 13px/1 var(--font-body); color: #c9d3e0; background: none; border: 0;
+    padding: 10px 14px; border-radius: 999px; cursor: pointer; white-space: nowrap;
+  }
+  .switcher button b { font-family: var(--font-mono); color: var(--gold); margin-right: 6px; font-weight: 500; }
+  .switcher button[aria-pressed="true"] { background: #fff; color: #0a0e16; }
+  .switcher button[aria-pressed="true"] b { color: #0a0e16; }
+  .brief {
+    position: fixed; z-index: 100; right: 16px; top: 16px; max-width: 280px;
+    font: 13px/1.45 var(--font-body); color: #dbe4ef;
+    background: rgba(10, 14, 22, .88); backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,.12); border-radius: 12px; padding: 12px 14px;
+  }
+  .brief strong { display: block; color: #fff; margin-bottom: 2px; }
+  .brief button { position: absolute; top: 6px; right: 8px; background: none; border: 0; color: #8fa0b5; cursor: pointer; font-size: 16px; }
+  .brief.is-hidden { display: none; }
+  @media (max-width: 720px) { .brief { display: none; } }
+
+  /* =========================================================
+     A · DEEP WATER — closest to porfolio.dev: one centred column,
+     dark navy, light from the surface at the top, gold as the only accent
+     ========================================================= */
+  .v-a { background: var(--night); color: #c8d6e8; }
+  .v-a .surface {
+    position: absolute; inset: 0 0 auto; height: 520px; pointer-events: none;
+    background:
+      radial-gradient(60% 70% at 50% -10%, rgba(19, 250, 255, .22), transparent 70%),
+      radial-gradient(40% 50% at 80% -10%, rgba(0, 187, 250, .18), transparent 70%);
+  }
+  .v-a .wrap { position: relative; max-width: 760px; margin: 0 auto; padding: 0 20px 140px; }
+  .v-a nav {
+    position: sticky; top: 16px; z-index: 10; display: flex; justify-content: center; margin: 16px 0 96px;
+  }
+  .v-a nav ul {
+    display: flex; gap: 4px; padding: 6px; border-radius: 999px;
+    background: rgba(0, 23, 54, .7); backdrop-filter: blur(12px); border: 1px solid rgba(121, 215, 253, .15);
+  }
+  .v-a nav a { display: block; padding: 6px 14px; border-radius: 999px; text-decoration: none; font-size: 14px; font-weight: 500; color: #a9bdd6; }
+  .v-a nav a:hover { color: var(--white); background: rgba(121, 215, 253, .1); }
+  .v-a .hero { display: grid; gap: 20px; }
+  .v-a .hero-top { display: flex; align-items: center; gap: 16px; }
+  .v-a .avatar { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255, 197, 74, .6); }
+  .v-a .loc { font-size: 14px; color: var(--sky); }
+  .v-a h1 {
+    margin: 0; color: var(--white); font: italic 800 clamp(2.6rem, 7vw, 4rem)/.95 var(--font-display);
+    text-transform: uppercase; letter-spacing: .01em;
+  }
+  .v-a h1 span { color: var(--gold); }
+  .v-a .lead { font-size: 1.15rem; max-width: 56ch; margin: 0; }
+  .v-a .lead b { color: var(--white); font-weight: 600; }
+  .v-a .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+  .v-a .btn {
+    display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 999px;
+    text-decoration: none; font-size: 14px; font-weight: 500; color: var(--white);
+    border: 1px solid rgba(121, 215, 253, .25); background: rgba(121, 215, 253, .06);
+  }
+  .v-a .btn:hover { border-color: var(--gold); color: var(--gold); }
+  .v-a .btn--primary { background: var(--gold); border-color: var(--gold); color: var(--night); }
+  .v-a .btn--primary:hover { color: var(--night); filter: brightness(1.08); }
+  .v-a section.block { margin-top: 112px; scroll-margin-top: 90px; }
+  .v-a h2 {
+    display: flex; align-items: center; gap: 12px; margin: 0 0 32px; color: var(--white);
+    font: italic 700 1.9rem/1 var(--font-display); text-transform: uppercase;
+  }
+  .v-a h2::before { content: ''; width: 18px; height: 18px; background: var(--gold); transform: skewX(-12deg); }
+  .v-a .timeline { border-left: 1px solid rgba(121, 215, 253, .2); margin-left: 8px; }
+  .v-a .timeline > li { position: relative; padding: 0 0 36px 28px; }
+  .v-a .timeline > li::before {
+    content: ''; position: absolute; left: -5px; top: 9px; width: 9px; height: 9px; border-radius: 50%;
+    background: var(--night); border: 2px solid var(--cyan);
+  }
+  .v-a .timeline > li:first-child::before { border-color: var(--gold); background: var(--gold); }
+  .v-a .t-role { margin: 0; color: var(--white); font-size: 1.15rem; font-weight: 600; }
+  .v-a .t-meta { margin: 2px 0 8px; font-size: 14px; color: var(--sky); }
+  .v-a .t-meta time { color: #7f95b3; margin-left: 8px; font-family: var(--font-mono); font-size: 12px; }
+  .v-a .t-text { margin: 0 0 10px; }
+  .v-a .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .v-a .tags li { font-size: 12px; padding: 3px 10px; border-radius: 999px; background: rgba(121, 215, 253, .08); color: var(--sky); border: 1px solid rgba(121, 215, 253, .15); }
+  .v-a .project { display: grid; gap: 20px; margin-bottom: 56px; }
+  .v-a .project img { border-radius: 14px; aspect-ratio: 16/9; object-fit: cover; object-position: top; width: 100%; border: 1px solid rgba(121, 215, 253, .15); box-shadow: 0 20px 50px rgba(0,0,0,.35); }
+  .v-a .project h3 { margin: 0; color: var(--white); font: italic 700 1.6rem/1 var(--font-display); text-transform: uppercase; }
+  .v-a .project p { margin: 8px 0 12px; }
+  .v-a .status { font-size: 12px; font-weight: 600; color: var(--gold); margin-left: 10px; font-family: var(--font-body); font-style: normal; text-transform: none; vertical-align: middle; }
+  .v-a .links { display: flex; gap: 10px; margin-top: 14px; }
+  .v-a .contact { font-size: 1.1rem; max-width: 52ch; }
+  .v-a .contact a.mail { color: var(--gold); font-weight: 600; text-decoration: none; border-bottom: 1px solid currentColor; }
+
+  /* =========================================================
+     B · SURFACE — light theme: pale sky paper, navy ink.
+     The game survives only as the gold highlighter and the slant
+     ========================================================= */
+  .v-b { --paper: #f3f8fc; --ink: #001736; --muted: #4a5f7a; --line: #d4e3ef; background: var(--paper); color: var(--muted); }
+  .v-b .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px 140px; }
+  .v-b header { display: flex; justify-content: space-between; align-items: center; padding: 28px 0; border-bottom: 1px solid var(--line); }
+  .v-b .mark { font: italic 800 1.4rem/1 var(--font-display); color: var(--ink); text-transform: uppercase; text-decoration: none; }
+  .v-b header ul { display: flex; gap: 28px; }
+  .v-b header a:not(.mark) { text-decoration: none; color: var(--muted); font-weight: 500; font-size: 15px; }
+  .v-b header a:not(.mark):hover { color: var(--ink); }
+  .v-b .hero { display: grid; grid-template-columns: 1.4fr 1fr; gap: 56px; align-items: end; padding: 96px 0 80px; }
+  .v-b .eyebrow { font: 500 13px/1 var(--font-mono); color: #0a7fd6; margin: 0 0 20px; }
+  .v-b h1 { margin: 0; color: var(--ink); font: 600 clamp(2.4rem, 5.4vw, 4.2rem)/1.02 var(--font-display); letter-spacing: -.01em; }
+  .v-b mark {
+    background: linear-gradient(transparent 58%, var(--gold) 58%, var(--gold) 92%, transparent 92%);
+    color: inherit; font-style: italic; padding: 0 .08em;
+  }
+  .v-b .lead { font-size: 1.15rem; margin: 24px 0 0; max-width: 46ch; }
+  .v-b .photo-wrap { position: relative; justify-self: end; width: min(320px, 100%); }
+  .v-b .photo-wrap::before { content: ''; position: absolute; inset: 14px -14px -14px 14px; background: var(--cyan); transform: skewY(-4deg); }
+  .v-b .photo-wrap img { position: relative; width: 100%; aspect-ratio: 4/5; object-fit: cover; }
+  .v-b section.block { display: grid; grid-template-columns: 220px 1fr; gap: 40px; padding: 72px 0; border-top: 1px solid var(--line); scroll-margin-top: 20px; }
+  .v-b h2 { margin: 0; color: var(--ink); font: italic 700 1.5rem/1.1 var(--font-display); text-transform: uppercase; }
+  .v-b .row { display: grid; grid-template-columns: 150px 1fr; gap: 24px; padding: 0 0 32px; }
+  .v-b .row + .row { padding-top: 32px; border-top: 1px dashed var(--line); }
+  .v-b time { font: 12px/1.9 var(--font-mono); color: #6f84a0; }
+  .v-b .t-role { margin: 0; color: var(--ink); font-size: 1.1rem; font-weight: 600; }
+  .v-b .t-meta { margin: 0 0 8px; color: #0a7fd6; font-weight: 500; font-size: 15px; }
+  .v-b .t-text { margin: 0 0 12px; }
+  .v-b .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .v-b .tags li { font: 12px/1 var(--font-mono); padding: 6px 8px; background: #e3eef7; color: var(--ink); border-radius: 4px; }
+  .v-b .projects { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; }
+  .v-b .project { text-decoration: none; color: inherit; display: block; }
+  .v-b .project img { aspect-ratio: 4/3; object-fit: cover; object-position: top; width: 100%; border: 1px solid var(--line); transition: transform .3s ease; }
+  .v-b .project:hover img { transform: translateY(-4px); }
+  .v-b .project h3 { margin: 18px 0 6px; color: var(--ink); font: italic 700 1.4rem/1 var(--font-display); text-transform: uppercase; }
+  .v-b .project h3 small { font: 500 12px var(--font-mono); text-transform: none; color: #0a7fd6; margin-left: 8px; font-style: normal; }
+  .v-b .project p { margin: 0 0 12px; }
+  .v-b .contact-list li { display: flex; justify-content: space-between; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+  .v-b .contact-list li:first-child { padding-top: 0; }
+  .v-b .contact-list span { color: var(--ink); font-weight: 600; }
+  .v-b .contact-list a { color: #0a7fd6; text-decoration: none; font-family: var(--font-mono); font-size: 14px; }
+  .v-b .contact-list a:hover { text-decoration: underline; }
+  @media (max-width: 760px) {
+    .v-b header ul { gap: 16px; }
+    .v-b .hero, .v-b section.block, .v-b .row, .v-b .projects { grid-template-columns: 1fr; }
+    .v-b .hero { gap: 40px; padding-top: 56px; }
+    .v-b .photo-wrap { justify-self: start; width: 220px; }
+    .v-b section.block { gap: 24px; }
+    .v-b .row { gap: 4px; }
+  }
+
+  /* =========================================================
+     C · DEPTH GAUGE — sticky sidebar layout. The ocean dive becomes
+     a thin depth gauge that fills as you scroll, nothing more
+     ========================================================= */
+  .v-c { --deep: #020a1a; background: var(--deep); color: #9fb1c8; }
+  .v-c .layout { max-width: 1180px; margin: 0 auto; padding: 0 28px; display: grid; grid-template-columns: 1fr 1.25fr; gap: 64px; }
+  .v-c aside { position: sticky; top: 0; height: 100vh; padding: 88px 0 72px; display: flex; flex-direction: column; }
+  .v-c h1 { margin: 0; color: var(--white); font: italic 800 clamp(2.6rem, 4.6vw, 3.8rem)/.92 var(--font-display); text-transform: uppercase; }
+  .v-c .role { margin: 14px 0 0; color: var(--sky); font: 600 1.25rem/1.2 var(--font-display); letter-spacing: .02em; }
+  .v-c .tagline { margin: 16px 0 0; max-width: 34ch; }
+  .v-c .gauge-nav { margin-top: 64px; display: grid; grid-template-columns: 6px 1fr; gap: 0 22px; }
+  .v-c .gauge {
+    position: relative; border-radius: 3px; overflow: hidden;
+    background: linear-gradient(180deg, #13faff, #0f94fe 25%, #0022b7 60%, #000060);
+    opacity: .35;
+  }
+  .v-c .gauge-fill {
+    position: absolute; inset: 0; border-radius: 3px;
+    background: linear-gradient(180deg, #13faff, #0f94fe 25%, #0022b7 60%, #000060);
+    clip-path: inset(0 0 calc(100% - var(--depth, 0) * 100%) 0);
+  }
+  .v-c .gauge-nav ul { display: grid; gap: 4px; }
+  .v-c .gauge-nav a {
+    display: flex; align-items: center; gap: 12px; padding: 8px 0; text-decoration: none;
+    font: 600 13px/1 var(--font-body); letter-spacing: .14em; text-transform: uppercase; color: #5f7290;
+  }
+  .v-c .gauge-nav a::before { content: ''; width: 24px; height: 1px; background: currentColor; transition: width .25s ease; }
+  .v-c .gauge-nav a:hover, .v-c .gauge-nav a.is-current { color: var(--white); }
+  .v-c .gauge-nav a.is-current::before { width: 56px; background: var(--gold); }
+  .v-c .depth-readout { margin-left: auto; font: 400 11px/1 var(--font-mono); color: #4d5f7a; letter-spacing: 0; }
+  .v-c .socials { margin-top: auto; display: flex; gap: 20px; font-size: 14px; }
+  .v-c .socials a { text-decoration: none; color: #8ea2bd; }
+  .v-c .socials a:hover { color: var(--gold); }
+  .v-c main { padding: 88px 0 160px; }
+  .v-c section.block { margin-bottom: 120px; scroll-margin-top: 88px; }
+  .v-c h2 { display: none; }
+  .v-c .about p { margin: 0 0 16px; font-size: 1.05rem; }
+  .v-c .about b { color: var(--white); font-weight: 600; }
+  .v-c .card {
+    display: grid; grid-template-columns: 130px 1fr; gap: 20px; padding: 20px; margin: 0 -20px 8px;
+    border-radius: 10px; text-decoration: none; color: inherit; transition: background .2s ease;
+  }
+  .v-c .card:hover { background: rgba(121, 215, 253, .05); box-shadow: inset 0 1px 0 rgba(121, 215, 253, .1); }
+  .v-c .card:hover .t-role { color: var(--gold); }
+  .v-c time { font: 500 12px/1.9 var(--font-mono); color: #5f7290; text-transform: uppercase; }
+  .v-c .t-role { margin: 0; color: var(--white); font-weight: 600; font-size: 1.05rem; transition: color .2s ease; }
+  .v-c .t-meta { margin: 0 0 8px; color: var(--sky); font-size: 14px; }
+  .v-c .t-text { margin: 0 0 12px; font-size: 15px; }
+  .v-c .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .v-c .tags li { font-size: 12px; font-weight: 500; padding: 4px 10px; border-radius: 999px; background: rgba(255, 197, 74, .1); color: var(--gold); }
+  .v-c .card img { border-radius: 6px; aspect-ratio: 16/10; object-fit: cover; object-position: top; border: 1px solid rgba(255,255,255,.08); margin-top: 4px; }
+  .v-c .contact p { font-size: 1.05rem; }
+  .v-c .contact a { color: var(--gold); }
+  @media (max-width: 900px) {
+    .v-c .layout { grid-template-columns: 1fr; gap: 0; }
+    .v-c aside { position: static; height: auto; padding: 64px 0 24px; }
+    .v-c .gauge-nav { display: none; }
+    .v-c .socials { margin-top: 32px; }
+    .v-c main { padding-top: 32px; }
+    .v-c h2 { display: block; margin: 0 0 20px; color: var(--white); font: 600 13px/1 var(--font-body); letter-spacing: .14em; text-transform: uppercase; }
+    .v-c .card { grid-template-columns: 1fr; gap: 6px; }
+  }
+
+  /* =========================================================
+     D · COMMAND — most faithful to the origin: condensed italic
+     headings, the slanted gold "selected" bar, clipped corners.
+     Static and calm, no transitions between sections
+     ========================================================= */
+  .v-d { background: var(--night); color: #c3d2e6; position: relative; }
+  .v-d::before {
+    content: ''; position: fixed; inset: 0; pointer-events: none;
+    background: linear-gradient(180deg, #0b2a5c 0%, var(--night) 45%, #000c22 100%);
+  }
+  .v-d .wrap { position: relative; max-width: 1120px; margin: 0 auto; padding: 0 24px 140px; }
+  .v-d header { display: flex; justify-content: space-between; align-items: center; padding: 28px 0; }
+  .v-d .mark { font: italic 800 1.6rem/1 var(--font-display); color: var(--white); text-transform: uppercase; text-decoration: none; }
+  .v-d header ul { display: flex; gap: 6px; }
+  .v-d header a {
+    display: block; padding: 6px 14px; text-decoration: none; color: var(--sky);
+    font: italic 700 1.15rem/1 var(--font-display); text-transform: uppercase;
+  }
+  .v-d header a:hover { background: var(--gold); color: var(--night); transform: skewX(-10deg); }
+  .v-d .hero { padding: 104px 0 96px; display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: center; }
+  .v-d .kicker {
+    display: inline-block; margin: 0 0 22px; padding: 6px 14px; background: var(--gold); color: var(--night);
+    font: italic 700 1rem/1 var(--font-display); text-transform: uppercase; letter-spacing: .04em; transform: skewX(-10deg);
+  }
+  .v-d .kicker span { display: inline-block; transform: skewX(10deg); }
+  .v-d h1 { margin: 0; color: var(--white); font: italic 800 clamp(3rem, 9vw, 6.6rem)/.86 var(--font-display); text-transform: uppercase; }
+  .v-d h1 em { color: var(--sky); font-style: italic; display: block; }
+  .v-d .lead { font-size: 1.15rem; max-width: 48ch; margin: 28px 0 0; }
+  .v-d .lead b { color: var(--white); }
+  .v-d .portrait { width: 260px; aspect-ratio: 1; object-fit: cover; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); }
+  .v-d section.block { padding: 64px 0; scroll-margin-top: 20px; }
+  .v-d h2 {
+    margin: 0 0 36px; color: var(--white); font: italic 800 clamp(2.2rem, 5vw, 3.2rem)/1 var(--font-display); text-transform: uppercase;
+    display: flex; align-items: baseline; gap: 16px;
+  }
+  .v-d h2::after { content: ''; flex: 1; height: 2px; background: linear-gradient(90deg, rgba(121, 215, 253, .5), transparent); transform: translateY(-.3em); }
+  .v-d .timeline { display: grid; gap: 14px; }
+  .v-d .timeline > li {
+    display: grid; grid-template-columns: 1fr auto; gap: 4px 24px; padding: 22px 26px;
+    background: rgba(0, 12, 34, .55); border-left: 3px solid var(--cyan);
+    clip-path: polygon(0 0, 100% 0, calc(100% - 18px) 100%, 0 100%);
+  }
+  .v-d .timeline > li:first-child { border-left-color: var(--gold); }
+  .v-d .t-role { margin: 0; color: var(--sky); font: italic 700 1.4rem/1.1 var(--font-display); text-transform: uppercase; }
+  .v-d time { grid-column: 2; grid-row: 1; font: 500 12px/2 var(--font-mono); color: #7f95b3; }
+  .v-d .t-meta { margin: 0; color: var(--white); font-weight: 600; font-size: 14px; letter-spacing: .06em; text-transform: uppercase; }
+  .v-d .t-text { grid-column: 1 / -1; margin: 8px 0 0; }
+  .v-d .tags { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .v-d .tags li { font: italic 700 12px/1 var(--font-display); text-transform: uppercase; letter-spacing: .04em; padding: 5px 9px; background: var(--gold); color: var(--night); }
+  .v-d .projects { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .v-d .project { background: rgba(0, 12, 34, .55); text-decoration: none; color: inherit; display: block; clip-path: polygon(0 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%); }
+  .v-d .project img { aspect-ratio: 16/9; width: 100%; object-fit: cover; object-position: top; }
+  .v-d .project div { padding: 20px 24px 28px; }
+  .v-d .project h3 { margin: 0 0 8px; color: var(--white); font: italic 800 1.7rem/1 var(--font-display); text-transform: uppercase; }
+  .v-d .project:hover h3 { color: var(--gold); }
+  .v-d .project p { margin: 0 0 14px; font-size: 15px; }
+  .v-d .project .status { font: 500 12px var(--font-mono); color: var(--gold); text-transform: none; margin-left: 8px; font-style: normal; }
+  .v-d .contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .v-d .contact-grid a {
+    display: block; padding: 22px 24px; background: rgba(0, 12, 34, .55); text-decoration: none;
+    border-bottom: 3px solid transparent;
+  }
+  .v-d .contact-grid a:hover { border-bottom-color: var(--gold); }
+  .v-d .contact-grid strong { display: block; color: var(--white); font: italic 800 1.6rem/1 var(--font-display); text-transform: uppercase; }
+  .v-d .contact-grid span { font: 13px var(--font-mono); color: var(--sky); }
+  @media (max-width: 800px) {
+    .v-d header ul { display: none; }
+    .v-d .hero { grid-template-columns: 1fr; padding-top: 48px; }
+    .v-d .portrait { width: 180px; order: -1; }
+    .v-d .projects, .v-d .contact-grid { grid-template-columns: 1fr; }
+    .v-d .timeline > li { grid-template-columns: 1fr; }
+    .v-d time { grid-column: 1; grid-row: auto; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; }
+  }
+</style>
+</head>
+<body>
+
+<aside class="brief" id="brief">
+  <button type="button" aria-label="Hide notes" onclick="this.parentElement.classList.add('is-hidden')">×</button>
+  <strong id="brief-title"></strong>
+  <span id="brief-text"></span>
+</aside>
+
+<div id="a" class="variant v-a"></div>
+<div id="b" class="variant v-b"></div>
+<div id="c" class="variant v-c"></div>
+<div id="d" class="variant v-d"></div>
+
+<nav class="switcher" aria-label="Design direction">
+  <button type="button" data-v="a"><b>A</b>Deep water</button>
+  <button type="button" data-v="b"><b>B</b>Surface</button>
+  <button type="button" data-v="c"><b>C</b>Depth gauge</button>
+  <button type="button" data-v="d"><b>D</b>Command</button>
+</nav>
+
+<script>
+  // Assets live in the current project; adjust these paths if the file moves
+  const ASSETS = '../portfolio-persona3reload/public/'
+
+  const PROFILE = {
+    name: 'Adrian Hermosilla',
+    first: 'Adrian',
+    last: 'Hermosilla',
+    role: 'Software Developer',
+    location: 'Ceuta, Spain',
+    photo: ASSETS + 'photo.webp',
+  }
+
+  const EXPERIENCE = [
+    { role: 'Software Developer', place: 'Tecnalis', dates: 'Jul 2021 – Present', text: 'Development of Alira, a gaming management platform used by online gaming and sports betting operators.', tags: ['Java', 'SQL', 'Linux', 'AI Tools'] },
+    { role: 'Software Developer Intern', place: 'Suertia', dates: 'Apr 2021 – Jun 2021', text: 'Web development for an online gaming and betting operator.', tags: ['JavaScript', 'PHP'] },
+    { role: 'IT Helpdesk Intern', place: 'Zbitt & VistaJet', dates: 'Mar 2019 – Jun 2019', text: 'Support, repair and maintenance of devices for customers and employees.', tags: [] },
+  ]
+
+  const EDUCATION = [
+    { role: 'Higher Vocational Training in Web Application Development', place: 'IES Puertas del Campo', dates: '2019 – 2021', text: 'Studies focused on web development, where I learned everything I needed to build a video game e-commerce site as my final project.', tags: ['JavaScript', 'Java', 'PHP', 'SQL', 'Docker'] },
+    { role: 'Intermediate Vocational Training in Microcomputer Systems and Networks', place: 'IES Puertas del Campo', dates: '2017 – 2019', text: 'Studies on how computers work in a broad sense. This is where I started programming, through scripting.', tags: ['Linux', 'Scripting', 'Apache', 'Tomcat'] },
+  ]
+
+  const PROJECTS = [
+    { title: 'Diagon Cafe', year: 2026, status: 'Live', description: 'Website for Diagon Cafe, a board game coffee shop in Cala Rajada (Mallorca), with its menu, games, photos and contact details in four languages.', tags: ['React', 'Web performance', 'SEO', 'Accessibility'], url: 'https://adrianhruiz.github.io/cafediagon/', repo: 'https://github.com/adrianhruiz/cafediagon', image: ASSETS + 'projects/cafediagon-1.jpg' },
+    { title: 'MedicApp', year: 2026, status: 'Personal use', description: 'Android app to save your medicines, organise them with dose reminders and keep track of your allergies, warning you when a medicine may not be suitable for you.', tags: ['Kotlin', 'Firebase', 'Android'], url: '', repo: 'https://github.com/adrianhruiz/mediapp', image: ASSETS + 'projects/medicapp-1.jpg' },
+  ]
+
+  const LINKS = [
+    { label: 'Email', detail: 'groveh8@gmail.com', href: 'mailto:groveh8@gmail.com' },
+    { label: 'GitHub', detail: 'github.com/adrianhruiz', href: 'https://github.com/adrianhruiz' },
+    { label: 'LinkedIn', detail: 'linkedin.com/in/groveh8', href: 'https://www.linkedin.com/in/groveh8/' },
+  ]
+
+  const ABOUT_HTML = `Hi! I'm a <b>software developer</b> based in Ceuta, Spain. I fell in love with computers as a kid, and I spend a lot of time in this digital world.`
+
+  const tags = (list) => list.length ? `<ul class="tags">${list.map((t) => `<li>${t}</li>`).join('')}</ul>` : ''
+  const ext = (href) => href.startsWith('mailto:') ? '' : ' target="_blank" rel="noreferrer"'
+
+  const NOTES = {
+    a: ['A · Deep water', 'Closest to porfolio.dev. One centred column, floating pill nav, light from the water surface at the top. Gold is the only accent.'],
+    b: ['B · Surface', 'Light version. The ocean becomes pale sky paper; gold survives as a highlighter and cyan as the photo offset.'],
+    c: ['C · Depth gauge', 'Sticky sidebar. The old "dive" per section becomes a thin gauge with the original ocean gradient that fills on scroll.'],
+    d: ['D · Command', 'Most faithful to the origin: condensed italic, gold "selected" bar, clipped corners. Calm and static, no wipes.'],
+  }
+
+  const RENDER = {
+    a: () => `
+      <div class="surface"></div>
+      <div class="wrap">
+        <nav aria-label="Sections"><ul>
+          <li><a href="#a-experience">Experience</a></li>
+          <li><a href="#a-projects">Projects</a></li>
+          <li><a href="#a-education">Education</a></li>
+          <li><a href="#a-contact">Contact</a></li>
+        </ul></nav>
+        <section class="hero">
+          <div class="hero-top">
+            <img class="avatar" src="${PROFILE.photo}" alt="${PROFILE.name}" />
+            <span class="loc">${PROFILE.role} · ${PROFILE.location}</span>
+          </div>
+          <h1>Hi, I'm <span>${PROFILE.first}</span>.</h1>
+          <p class="lead">${ABOUT_HTML}</p>
+          <div class="actions">
+            <a class="btn btn--primary" href="mailto:groveh8@gmail.com">Get in touch</a>
+            <a class="btn" href="https://www.linkedin.com/in/groveh8/" target="_blank" rel="noreferrer">LinkedIn</a>
+            <a class="btn" href="https://github.com/adrianhruiz" target="_blank" rel="noreferrer">GitHub</a>
+          </div>
+        </section>
+        <section class="block" id="a-experience">
+          <h2>Experience</h2>
+          <ul class="timeline">${EXPERIENCE.map((e) => `
+            <li><h3 class="t-role">${e.role}</h3>
+              <p class="t-meta">${e.place}<time>${e.dates}</time></p>
+              <p class="t-text">${e.text}</p>${tags(e.tags)}</li>`).join('')}
+          </ul>
+        </section>
+        <section class="block" id="a-projects">
+          <h2>Projects</h2>
+          ${PROJECTS.map((p) => `
+            <article class="project">
+              <img src="${p.image}" alt="${p.title} screenshot" loading="lazy" />
+              <div>
+                <h3>${p.title}<span class="status">${p.status}</span></h3>
+                <p>${p.description}</p>${tags(p.tags)}
+                <div class="links">
+                  ${p.url ? `<a class="btn" href="${p.url}" target="_blank" rel="noreferrer">Visit site</a>` : ''}
+                  <a class="btn" href="${p.repo}" target="_blank" rel="noreferrer">Source code</a>
+                </div>
+              </div>
+            </article>`).join('')}
+        </section>
+        <section class="block" id="a-education">
+          <h2>Education</h2>
+          <ul class="timeline">${EDUCATION.map((e) => `
+            <li><h3 class="t-role">${e.role}</h3>
+              <p class="t-meta">${e.place}<time>${e.dates}</time></p>
+              <p class="t-text">${e.text}</p>${tags(e.tags)}</li>`).join('')}
+          </ul>
+        </section>
+        <section class="block" id="a-contact">
+          <h2>Contact</h2>
+          <p class="contact">Want to talk about a project or an opportunity? Write to me at
+            <a class="mail" href="mailto:groveh8@gmail.com">groveh8@gmail.com</a> or find me on LinkedIn.</p>
+        </section>
+      </div>`,
+
+    b: () => `
+      <div class="wrap">
+        <header>
+          <a class="mark" href="#b">${PROFILE.name}</a>
+          <ul>
+            <li><a href="#b-experience">Experience</a></li>
+            <li><a href="#b-projects">Projects</a></li>
+            <li><a href="#b-contact">Contact</a></li>
+          </ul>
+        </header>
+        <section class="hero">
+          <div>
+            <p class="eyebrow">${PROFILE.role} — ${PROFILE.location}</p>
+            <h1>I build software for the web and for <mark>Android</mark>.</h1>
+            <p class="lead">${ABOUT_HTML}</p>
+          </div>
+          <div class="photo-wrap"><img src="${PROFILE.photo}" alt="${PROFILE.name}" /></div>
+        </section>
+        <section class="block" id="b-experience">
+          <h2>Experience</h2>
+          <div>${EXPERIENCE.map((e) => `
+            <div class="row"><time>${e.dates}</time>
+              <div><h3 class="t-role">${e.role}</h3><p class="t-meta">${e.place}</p>
+              <p class="t-text">${e.text}</p>${tags(e.tags)}</div></div>`).join('')}
+          </div>
+        </section>
+        <section class="block" id="b-projects">
+          <h2>Projects</h2>
+          <div class="projects">${PROJECTS.map((p) => `
+            <a class="project" href="${p.url || p.repo}" target="_blank" rel="noreferrer">
+              <img src="${p.image}" alt="${p.title} screenshot" loading="lazy" />
+              <h3>${p.title}<small>${p.status} · ${p.year}</small></h3>
+              <p>${p.description}</p>${tags(p.tags)}
+            </a>`).join('')}
+          </div>
+        </section>
+        <section class="block">
+          <h2>Education</h2>
+          <div>${EDUCATION.map((e) => `
+            <div class="row"><time>${e.dates}</time>
+              <div><h3 class="t-role">${e.role}</h3><p class="t-meta">${e.place}</p>
+              <p class="t-text">${e.text}</p></div></div>`).join('')}
+          </div>
+        </section>
+        <section class="block" id="b-contact">
+          <h2>Contact</h2>
+          <ul class="contact-list">${LINKS.map((l) => `
+            <li><span>${l.label}</span><a href="${l.href}"${ext(l.href)}>${l.detail}</a></li>`).join('')}
+          </ul>
+        </section>
+      </div>`,
+
+    c: () => `
+      <div class="layout">
+        <aside>
+          <h1>${PROFILE.first}<br />${PROFILE.last}</h1>
+          <p class="role">${PROFILE.role}</p>
+          <p class="tagline">Building gaming management software at Tecnalis, and personal projects for the web and Android.</p>
+          <div class="gauge-nav">
+            <div class="gauge"><div class="gauge-fill"></div></div>
+            <ul>
+              <li><a href="#c-about" data-section>About<span class="depth-readout">0 m</span></a></li>
+              <li><a href="#c-experience" data-section>Experience<span class="depth-readout">-12 m</span></a></li>
+              <li><a href="#c-projects" data-section>Projects<span class="depth-readout">-28 m</span></a></li>
+              <li><a href="#c-education" data-section>Education<span class="depth-readout">-41 m</span></a></li>
+            </ul>
+          </div>
+          <div class="socials">${LINKS.map((l) => `<a href="${l.href}"${ext(l.href)}>${l.label}</a>`).join('')}</div>
+        </aside>
+        <main>
+          <section class="block about" id="c-about">
+            <h2>About</h2>
+            <p>${ABOUT_HTML}</p>
+            <p>Here you'll find information about me and the personal projects I'm working on.</p>
+          </section>
+          <section class="block" id="c-experience">
+            <h2>Experience</h2>
+            ${EXPERIENCE.map((e) => `
+              <div class="card"><time>${e.dates}</time>
+                <div><h3 class="t-role">${e.role} · ${e.place}</h3>
+                <p class="t-text">${e.text}</p>${tags(e.tags)}</div></div>`).join('')}
+          </section>
+          <section class="block" id="c-projects">
+            <h2>Projects</h2>
+            ${PROJECTS.map((p) => `
+              <a class="card" href="${p.url || p.repo}" target="_blank" rel="noreferrer">
+                <img src="${p.image}" alt="${p.title} screenshot" loading="lazy" />
+                <div><h3 class="t-role">${p.title} ↗</h3><p class="t-meta">${p.status} · ${p.year}</p>
+                <p class="t-text">${p.description}</p>${tags(p.tags)}</div></a>`).join('')}
+          </section>
+          <section class="block" id="c-education">
+            <h2>Education</h2>
+            ${EDUCATION.map((e) => `
+              <div class="card"><time>${e.dates}</time>
+                <div><h3 class="t-role">${e.role}</h3><p class="t-meta">${e.place}</p>
+                <p class="t-text">${e.text}</p></div></div>`).join('')}
+          </section>
+        </main>
+      </div>`,
+
+    d: () => `
+      <div class="wrap">
+        <header>
+          <a class="mark" href="#d">${PROFILE.name}</a>
+          <ul>
+            <li><a href="#d-experience">Experience</a></li>
+            <li><a href="#d-projects">Projects</a></li>
+            <li><a href="#d-contact">Contact</a></li>
+          </ul>
+        </header>
+        <section class="hero">
+          <div>
+            <p class="kicker"><span>${PROFILE.role} · ${PROFILE.location}</span></p>
+            <h1>Adrian<em>Hermosilla</em></h1>
+            <p class="lead">${ABOUT_HTML}</p>
+          </div>
+          <img class="portrait" src="${PROFILE.photo}" alt="${PROFILE.name}" />
+        </section>
+        <section class="block" id="d-experience">
+          <h2>Experience</h2>
+          <ul class="timeline">${EXPERIENCE.map((e) => `
+            <li><h3 class="t-role">${e.role}</h3><time>${e.dates}</time>
+              <p class="t-meta">${e.place}</p>
+              <p class="t-text">${e.text}</p>${tags(e.tags)}</li>`).join('')}
+          </ul>
+        </section>
+        <section class="block" id="d-projects">
+          <h2>Projects</h2>
+          <div class="projects">${PROJECTS.map((p) => `
+            <a class="project" href="${p.url || p.repo}" target="_blank" rel="noreferrer">
+              <img src="${p.image}" alt="${p.title} screenshot" loading="lazy" />
+              <div><h3>${p.title}<span class="status">${p.status}</span></h3>
+              <p>${p.description}</p>${tags(p.tags)}</div>
+            </a>`).join('')}
+          </div>
+        </section>
+        <section class="block">
+          <h2>Education</h2>
+          <ul class="timeline">${EDUCATION.map((e) => `
+            <li><h3 class="t-role">${e.role}</h3><time>${e.dates}</time>
+              <p class="t-meta">${e.place}</p>
+              <p class="t-text">${e.text}</p>${tags(e.tags)}</li>`).join('')}
+          </ul>
+        </section>
+        <section class="block" id="d-contact">
+          <h2>Contact</h2>
+          <div class="contact-grid">${LINKS.map((l) => `
+            <a href="${l.href}"${ext(l.href)}><strong>${l.label}</strong><span>${l.detail}</span></a>`).join('')}
+          </div>
+        </section>
+      </div>`,
+  }
+
+  for (const [id, render] of Object.entries(RENDER)) document.getElementById(id).innerHTML = render()
+
+  const buttons = document.querySelectorAll('.switcher button')
+
+  function show(v) {
+    if (!RENDER[v]) v = 'a'
+    document.querySelectorAll('.variant').forEach((el) => el.classList.toggle('is-active', el.id === v))
+    buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === v)))
+    document.getElementById('brief-title').textContent = NOTES[v][0]
+    document.getElementById('brief-text').textContent = NOTES[v][1]
+    try { localStorage.setItem('direction', v) } catch {}
+    window.scrollTo(0, 0)
+    updateDepth()
+  }
+
+  buttons.forEach((b) => b.addEventListener('click', () => show(b.dataset.v)))
+
+  // Direction C: the gauge fills with scroll and marks the current section
+  const gaugeLinks = document.querySelectorAll('.v-c [data-section]')
+  function updateDepth() {
+    const max = document.documentElement.scrollHeight - innerHeight
+    const depth = max > 0 ? Math.min(1, scrollY / max) : 0
+    document.querySelector('.v-c').style.setProperty('--depth', depth.toFixed(3))
+    let current = gaugeLinks[0]
+    gaugeLinks.forEach((a) => {
+      const target = document.querySelector(a.getAttribute('href'))
+      if (target && target.getBoundingClientRect().top < innerHeight * 0.4) current = a
+    })
+    gaugeLinks.forEach((a) => a.classList.toggle('is-current', a === current))
+  }
+  addEventListener('scroll', updateDepth, { passive: true })
+
+  let saved = 'a'
+  try { saved = localStorage.getItem('direction') || 'a' } catch {}
+  show(saved)
+</script>
+</body>
+</html>
