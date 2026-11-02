@@ -298,6 +298,10 @@ a {
   color: var(--sky);
 }
 
+.timeline-head .tags {
+  margin-top: 14px;
+}
+
 .timeline-dates {
   display: block;
   margin-top: 2px;
@@ -391,9 +395,7 @@ a {
   border-radius: 14px;
   border: 1px solid var(--line);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
-  transition:
-    transform 0.3s ease,
-    border-color 0.3s ease;
+  transition: border-color 0.3s ease;
 }
 
 .project h3 {
@@ -411,7 +413,6 @@ a {
 }
 
 .project:hover img {
-  transform: translateY(-4px);
   border-color: rgba(255, 197, 74, 0.5);
 }
 
@@ -459,7 +460,7 @@ a {
   }
 
   .timeline-head {
-    margin-bottom: 8px;
+    margin-bottom: 16px;
   }
 
   .project img {
