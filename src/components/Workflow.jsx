@@ -13,9 +13,11 @@ export default function Workflow() {
         ))}
       </ul>
       <p className="workflow-text">
-        For me, AI should multiply software <b>quality</b>, not just speed. I use it to
-        understand the problem in depth, map the <b>edge cases</b> and think one step ahead to
-        catch failures before they&nbsp;happen.
+        In my experience, a lot of development time is won during requirements and analysis:
+        when everything is well understood and organized, it's easier to deliver with both
+        quality and speed. So I start by understanding the problem, then use AI to dig deeper,
+        surfacing <b>edge cases</b> and a second point of view. That gives me a solid base to
+        build a <b>robust</b>&nbsp;solution.
       </p>
     </Section>
   )
