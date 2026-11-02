@@ -11,7 +11,8 @@ export default function Hero() {
         </h1>
       </div>
       <p className="lead">
-        I'm a <b>software developer</b> with 5 years of experience in the industry.
+        I'm a <b>software developer</b> based in {profile.location}, with 5 years of experience in
+        the industry.
       </p>
       <p className="lead">
         AI helps us deliver software faster than ever. My mission is to bring{' '}
@@ -28,6 +29,12 @@ export default function Hero() {
         <a className="btn" href={profile.links.github} target="_blank" rel="noreferrer">
           GitHub
         </a>
+        {/* Shown once a CV file is set in profile.json */}
+        {profile.cv && (
+          <a className="btn" href={asset(profile.cv)} download>
+            Download CV
+          </a>
+        )}
       </div>
     </header>
   )

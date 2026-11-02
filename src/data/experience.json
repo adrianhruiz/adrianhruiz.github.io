@@ -1,16 +1,33 @@
 [
   {
     "role": "Software Developer",
-    "company": "Tecnalis",
+    "company": "Tecnalis/GiG",
     "dates": "Jul 2021 – Present",
     "description": "Development of Alira, a gaming management platform used by online gaming and sports betting operators.",
-    "tags": ["Java", "SQL", "Linux", "AI Tools"]
+    "highlights": [
+      "Built game, payment and affiliate integrations, backed by a deep understanding of the product.",
+      "Led projects driven by regulatory changes, or delivered them on my own end to end.",
+      "Improved the platform's performance through code, database and testing practices, making the product more stable."
+    ],
+    "tags": [
+      "Java",
+      "SQL",
+      "Linux",
+      "AI Tools"
+    ]
   },
   {
     "role": "Software Developer Intern",
-    "company": "Suertia",
+    "company": "Suertia/Olybet",
     "dates": "Apr 2021 – Jun 2021",
     "description": "Web development for an online gaming and betting operator.",
-    "tags": ["JavaScript", "PHP"]
+    "highlights": [
+      "Rebuilt sections of the website to be fully responsive.",
+      "Fixed casino features in production."
+    ],
+    "tags": [
+      "JavaScript",
+      "PHP"
+    ]
   }
 ]

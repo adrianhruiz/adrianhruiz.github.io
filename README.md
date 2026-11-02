@@ -17,12 +17,22 @@ npm run dev
 
 All the content lives in `src/data/`:
 
-- `profile.json`: name, photo and links (email, LinkedIn, GitHub).
-- `experience.json`: jobs shown in Experience, with their tags.
+- `profile.json`: name, location, photo, CV and links (email, LinkedIn, GitHub).
+- `experience.json`: jobs shown in Experience, with their highlights and tags.
 - `workflow.json`: tools shown in Workflow and what each one is used for.
 - `projects.json`: personal projects.
 
 The hero and Workflow texts are in `src/components/Hero.jsx` and `src/components/Workflow.jsx`.
+
+### CV
+
+Put the PDF in `public/` (for example `public/cv.pdf`) and set `"cv": "cv.pdf"` in `profile.json`.
+The **Download CV** button only shows up when `cv` is set.
+
+### Link preview
+
+`public/og-image.png` is the image shown when the site is shared. It is generated from
+`scripts/og-image.html`; the command to regenerate it is at the top of that file.
 
 ### Adding a project
 

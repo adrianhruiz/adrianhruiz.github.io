@@ -17,6 +17,13 @@ export default function Experience() {
             </div>
             <div className="timeline-body">
               <p className="timeline-text">{job.description}</p>
+              {job.highlights?.length > 0 && (
+                <ul className="timeline-highlights">
+                  {job.highlights.map((highlight) => (
+                    <li key={highlight}>{highlight}</li>
+                  ))}
+                </ul>
+              )}
               <Tags items={job.tags} />
             </div>
           </li>
