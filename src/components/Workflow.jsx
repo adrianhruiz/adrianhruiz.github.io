@@ -13,8 +13,9 @@ export default function Workflow() {
         ))}
       </ul>
       <p className="workflow-text">
-        Every piece of code I ship goes through <b>thorough analysis and testing</b>: covering
-        scenarios, handling <b>edge cases</b> and thinking&nbsp;ahead.
+        For me, AI should multiply software <b>quality</b>, not just speed. I use it to
+        understand the problem in depth, map the <b>edge cases</b> and think one step ahead to
+        catch failures before they&nbsp;happen.
       </p>
     </Section>
   )

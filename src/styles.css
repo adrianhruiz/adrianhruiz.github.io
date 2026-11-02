@@ -1,3 +1,53 @@
+/* Fonts are self-hosted (latin subset, from Google Fonts) so they load from the same origin
+   and do not block rendering on a third-party request */
+@font-face {
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/barlow-400.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/barlow-500.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/barlow-600.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/barlow-condensed-700-italic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-style: italic;
+  font-weight: 800;
+  font-display: swap;
+  src: url('/fonts/barlow-condensed-800-italic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/jetbrains-mono-400.woff2') format('woff2');
+}
+
 /* Palette inherited from the Persona 3 Reload portfolio: night blues with
    gold as the only accent */
 :root {
@@ -300,6 +350,17 @@ a {
 
 .timeline-head .tags {
   margin-top: 14px;
+}
+
+.timeline-head .tags + .tags {
+  margin-top: 8px;
+}
+
+/* Tools are told apart from the tech stack with the gold accent */
+.tags--tools li {
+  color: var(--gold);
+  background: rgba(255, 197, 74, 0.08);
+  border-color: rgba(255, 197, 74, 0.35);
 }
 
 .timeline-dates {

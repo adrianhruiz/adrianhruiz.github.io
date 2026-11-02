@@ -15,6 +15,7 @@ export default function Experience() {
                 <span className="timeline-dates">{job.dates}</span>
               </p>
               <Tags items={job.tags} />
+              <Tags items={job.tools} variant="tools" />
             </div>
             <div className="timeline-body">
               <p className="timeline-text">{job.description}</p>

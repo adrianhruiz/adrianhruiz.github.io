@@ -13,6 +13,9 @@ npm run dev
 
 `npm run lint` checks the code with oxlint and `npm run build` generates the site in `dist/`.
 
+The build prerenders the page to static HTML (`scripts/prerender.js`) and inlines the
+stylesheet, so the content paints before React loads; React then hydrates it.
+
 ## Content
 
 All the content lives in `src/data/`:
@@ -34,6 +37,15 @@ The **Download CV** button only shows up when `cv` is set.
 `public/og-image.png` is the image shown when the site is shared. It is generated from
 `scripts/og-image.html`; the command to regenerate it is at the top of that file.
 
+### Fonts and images
+
+Fonts are self-hosted in `public/fonts/`, subset to the characters the site uses.
+`scripts/fonts.sh` downloads and subsets them again (it needs `uv`); add any new symbol
+used in the copy to its `UNICODES` list first.
+
+Project screenshots and the avatar are served as resized WebP variants. After adding or
+replacing an image, run `scripts/optimize-images.sh` (it needs ImageMagick).
+
 ### Adding a project
 
 Add an entry to `src/data/projects.json` and put the image in `public/projects/`:
@@ -44,7 +56,12 @@ Add an entry to `src/data/projects.json` and put the image in `public/projects/`
   "description": "What it does and why I built it.",
   "url": "https://my-project.example",
   "repo": "https://github.com/adrianhruiz/my-project",
-  "image": { "src": "projects/my-project.jpg", "width": 1440, "height": 900 }
+  "image": {
+    "src": "projects/my-project.jpg",
+    "width": 1440,
+    "height": 900,
+    "widths": [480, 960, 1440]
+  }
 }
 ```
 
