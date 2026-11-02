@@ -1,0 +1,11 @@
+{
+  "name": "Adrian Hermosilla",
+  "firstName": "Adrian",
+  "photo": "photo.webp",
+  "links": {
+    "email": "mailto:groveh8@gmail.com",
+    "linkedin": "https://www.linkedin.com/in/groveh8/",
+    "github": "https://github.com/adrianhruiz",
+    "repositories": "https://github.com/adrianhruiz?tab=repositories"
+  }
+}

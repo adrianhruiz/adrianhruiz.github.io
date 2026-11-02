@@ -1,0 +1,436 @@
+/* Palette inherited from the Persona 3 Reload portfolio: night blues with
+   gold as the only accent */
+:root {
+  --sky: #79d7fd;
+  --cyan: #00bbfa;
+  --night: #001736;
+  --gold: #ffc54a;
+  --white: #ffffff;
+  --text: #c8d6e8;
+  --muted: #7f95b3;
+  --line: rgba(121, 215, 253, 0.15);
+  --fill: rgba(121, 215, 253, 0.06);
+
+  --font-display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --font-body: 'Barlow', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--night);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+ul,
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+/* Light falling from the water surface */
+.surface {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 520px;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 70% at 50% -10%, rgba(19, 250, 255, 0.22), transparent 70%),
+    radial-gradient(40% 50% at 80% -10%, rgba(0, 187, 250, 0.18), transparent 70%);
+}
+
+.wrap {
+  position: relative;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 20px 48px;
+}
+
+/* ---------- Nav ---------- */
+
+.nav {
+  position: sticky;
+  top: 16px;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  margin: 16px 0 96px;
+}
+
+.nav ul {
+  display: flex;
+  gap: 4px;
+  padding: 6px;
+  border-radius: 999px;
+  background: rgba(0, 23, 54, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--line);
+}
+
+.nav a {
+  display: block;
+  padding: 6px 14px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: #a9bdd6;
+  white-space: nowrap;
+}
+
+.nav a:hover {
+  color: var(--white);
+  background: rgba(121, 215, 253, 0.1);
+}
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--white);
+  border: 1px solid rgba(121, 215, 253, 0.25);
+  background: var(--fill);
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.btn--primary {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--night);
+}
+
+.btn--primary:hover {
+  color: var(--night);
+  filter: brightness(1.08);
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  display: grid;
+  gap: 20px;
+}
+
+.hero-top {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 3vw, 22px);
+}
+
+.avatar {
+  flex: none;
+  width: clamp(56px, 12vw, 76px);
+  height: clamp(56px, 12vw, 76px);
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 197, 74, 0.6);
+}
+
+.hero h1 {
+  margin: 0;
+  color: var(--white);
+  font: italic 800 clamp(2.6rem, 7vw, 4rem) / 0.95 var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+.hero h1 span {
+  color: var(--gold);
+}
+
+.lead {
+  margin: 0;
+  font-size: 1.15rem;
+  max-width: 56ch;
+}
+
+.lead b {
+  color: var(--white);
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+/* ---------- Sections ---------- */
+
+.section {
+  margin-top: 112px;
+  scroll-margin-top: 90px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 32px;
+  color: var(--white);
+  font: italic 700 1.9rem / 1 var(--font-display);
+  text-transform: uppercase;
+}
+
+/* Slanted gold block: the last trace of the old command menu */
+.section-title::before {
+  content: '';
+  width: 18px;
+  height: 18px;
+  background: var(--gold);
+  transform: skewX(-12deg);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tags li {
+  font-size: 12px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(121, 215, 253, 0.08);
+  color: var(--sky);
+  border: 1px solid var(--line);
+}
+
+/* ---------- Experience ---------- */
+
+.timeline {
+  border-left: 1px solid rgba(121, 215, 253, 0.2);
+  margin-left: 8px;
+}
+
+.timeline > li {
+  position: relative;
+  padding: 0 0 36px 28px;
+}
+
+.timeline > li::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 9px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--night);
+  border: 2px solid var(--cyan);
+}
+
+/* The current job is marked in gold */
+.timeline > li:first-child::before {
+  border-color: var(--gold);
+  background: var(--gold);
+}
+
+.timeline-role {
+  margin: 0;
+  color: var(--white);
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.timeline-meta {
+  margin: 2px 0 8px;
+  font-size: 14px;
+  color: var(--sky);
+}
+
+.timeline-dates {
+  margin-left: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.timeline-text {
+  margin: 0 0 10px;
+}
+
+/* ---------- Workflow ---------- */
+
+.workflow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.workflow li {
+  padding: 18px 20px;
+  border-radius: 14px;
+  background: rgba(121, 215, 253, 0.04);
+  border: 1px solid var(--line);
+}
+
+.workflow strong {
+  display: block;
+  color: var(--white);
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.workflow span {
+  display: block;
+  margin-top: 4px;
+  font-size: 14px;
+  color: var(--sky);
+}
+
+.workflow-text {
+  margin: 28px 0 0;
+  max-width: 60ch;
+  font-size: 1.1rem;
+}
+
+.workflow-text b {
+  color: var(--white);
+  font-weight: 600;
+}
+
+/* ---------- Projects ---------- */
+
+.project {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 56px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.project img {
+  width: 100%;
+  margin-bottom: 12px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.project h3 {
+  margin: 0;
+  color: var(--white);
+  font: italic 700 1.6rem / 1 var(--font-display);
+  text-transform: uppercase;
+  transition: color 0.2s ease;
+}
+
+.project p {
+  margin: 0;
+}
+
+.project:hover img {
+  transform: translateY(-4px);
+  border-color: rgba(255, 197, 74, 0.5);
+}
+
+.project:hover h3 {
+  color: var(--gold);
+}
+
+.more-link {
+  margin-top: -24px;
+  padding: 10px 18px;
+  font-size: 15px;
+}
+
+.more-link span {
+  transition: transform 0.2s ease;
+}
+
+.more-link:hover span {
+  transform: translate(2px, -2px);
+}
+
+/* ---------- Footer ---------- */
+
+.footer {
+  margin-top: 112px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(121, 215, 253, 0.12);
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 640px) {
+  .nav {
+    margin-bottom: 64px;
+  }
+
+  .nav a {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+
+  .section {
+    margin-top: 88px;
+  }
+
+  .workflow {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+  }
+}

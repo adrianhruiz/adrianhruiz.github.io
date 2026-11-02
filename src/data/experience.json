@@ -1,0 +1,16 @@
+[
+  {
+    "role": "Software Developer",
+    "company": "Tecnalis",
+    "dates": "Jul 2021 – Present",
+    "description": "Development of Alira, a gaming management platform used by online gaming and sports betting operators.",
+    "tags": ["Java", "SQL", "Linux", "AI Tools"]
+  },
+  {
+    "role": "Software Developer Intern",
+    "company": "Suertia",
+    "dates": "Apr 2021 – Jun 2021",
+    "description": "Web development for an online gaming and betting operator.",
+    "tags": ["JavaScript", "PHP"]
+  }
+]

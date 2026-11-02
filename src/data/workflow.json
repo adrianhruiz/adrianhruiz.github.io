@@ -1,0 +1,5 @@
+[
+  { "name": "Spec-Driven Development", "use": "Specifying before building" },
+  { "name": "Orca", "use": "Orchestrating agents" },
+  { "name": "Claude Code", "use": "Analyzing and writing code" }
+]
