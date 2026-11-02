@@ -72,7 +72,7 @@ a {
 
 .wrap {
   position: relative;
-  max-width: 760px;
+  max-width: 940px;
   margin: 0 auto;
   padding: 0 20px 48px;
 }
@@ -251,7 +251,20 @@ a {
 
 .timeline > li {
   position: relative;
-  padding: 0 0 36px 28px;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  grid-template-rows: auto 1fr;
+  gap: 0 40px;
+  padding: 0 0 48px 28px;
+}
+
+.timeline-head {
+  grid-row: 1 / span 2;
+}
+
+.timeline-body {
+  grid-column: 2;
+  grid-row: 1 / span 2;
 }
 
 .timeline > li::before {
@@ -280,20 +293,21 @@ a {
 }
 
 .timeline-meta {
-  margin: 2px 0 8px;
+  margin: 2px 0 0;
   font-size: 14px;
   color: var(--sky);
 }
 
 .timeline-dates {
-  margin-left: 8px;
+  display: block;
+  margin-top: 2px;
   font-family: var(--font-mono);
   font-size: 12px;
   color: var(--muted);
 }
 
 .timeline-text {
-  margin: 0 0 10px;
+  margin: 0 0 12px;
 }
 
 /* ---------- Workflow ---------- */
@@ -340,15 +354,17 @@ a {
 
 .project {
   display: grid;
-  gap: 8px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 8px 36px;
   margin-bottom: 56px;
   text-decoration: none;
   color: inherit;
 }
 
 .project img {
+  grid-row: 1 / span 2;
   width: 100%;
-  margin-bottom: 12px;
   border-radius: 14px;
   border: 1px solid var(--line);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
@@ -358,6 +374,7 @@ a {
 }
 
 .project h3 {
+  align-self: end;
   margin: 0;
   color: var(--white);
   font: italic 700 1.6rem / 1 var(--font-display);
@@ -366,6 +383,7 @@ a {
 }
 
 .project p {
+  align-self: start;
   margin: 0;
 }
 
@@ -379,7 +397,7 @@ a {
 }
 
 .more-link {
-  margin-top: -24px;
+  margin-top: -16px;
   padding: 10px 18px;
   font-size: 15px;
 }
@@ -403,6 +421,28 @@ a {
 }
 
 /* ---------- Small screens ---------- */
+
+@media (max-width: 760px) {
+  .timeline > li,
+  .project {
+    grid-template-columns: 1fr;
+  }
+
+  .timeline-head,
+  .timeline-body,
+  .project img {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .timeline-head {
+    margin-bottom: 8px;
+  }
+
+  .project img {
+    margin-bottom: 12px;
+  }
+}
 
 @media (max-width: 640px) {
   .nav {

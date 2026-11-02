@@ -8,13 +8,17 @@ export default function Experience() {
       <ol className="timeline">
         {experience.map((job) => (
           <li key={job.company + job.dates}>
-            <h3 className="timeline-role">{job.role}</h3>
-            <p className="timeline-meta">
-              {job.company}
-              <span className="timeline-dates">{job.dates}</span>
-            </p>
-            <p className="timeline-text">{job.description}</p>
-            <Tags items={job.tags} />
+            <div className="timeline-head">
+              <h3 className="timeline-role">{job.role}</h3>
+              <p className="timeline-meta">
+                {job.company}
+                <span className="timeline-dates">{job.dates}</span>
+              </p>
+            </div>
+            <div className="timeline-body">
+              <p className="timeline-text">{job.description}</p>
+              <Tags items={job.tags} />
+            </div>
           </li>
         ))}
       </ol>
