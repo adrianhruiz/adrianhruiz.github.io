@@ -14,14 +14,12 @@ export default function Workflow() {
       </ul>
       <div className="workflow-text">
         <p>
-          In my experience, a lot of development time is won during requirements and analysis:
-          when everything is well understood and organized, it's easier to deliver with both
-          quality and&nbsp;speed.
+          In my experience, much of the development time is won in requirements and analysis: a
+          well-understood problem is easier to deliver with quality and&nbsp;speed.
         </p>
         <p>
-          Once I understand the problem, I use AI to dig deeper into it, surfacing{' '}
-          <b>edge&nbsp;cases</b> and a second point of view. That gives me a solid base to build a{' '}
-          <b>robust</b>&nbsp;solution.
+          Once I understand it, I use AI to dig deeper, surfacing <b>edge&nbsp;cases</b> and a
+          second point of view to build a <b>robust</b>&nbsp;solution.
         </p>
       </div>
     </Section>
