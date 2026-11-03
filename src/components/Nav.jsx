@@ -1,6 +1,6 @@
 const SECTIONS = [
-  { id: 'experience', label: 'Experience' },
   { id: 'workflow', label: 'Workflow' },
+  { id: 'experience', label: 'Experience' },
   { id: 'projects', label: 'Personal projects' },
 ]
 

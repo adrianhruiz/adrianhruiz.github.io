@@ -13,8 +13,8 @@ export default function App() {
         <Nav />
         <main>
           <Hero />
-          <Experience />
           <Workflow />
+          <Experience />
           <Projects />
         </main>
         <Footer />
