@@ -433,6 +433,14 @@ a {
   font-size: 1.1rem;
 }
 
+.workflow-text p {
+  margin: 0 0 14px;
+}
+
+.workflow-text p:last-child {
+  margin-bottom: 0;
+}
+
 .workflow-text b {
   color: var(--white);
   font-weight: 600;
