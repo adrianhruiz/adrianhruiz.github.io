@@ -6,4 +6,8 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   base: '/',
   plugins: [react()],
+  // Used to prerender the years of experience; the browser recalculates it on load
+  define: {
+    __BUILD_DATE__: JSON.stringify(new Date().toISOString()),
+  },
 })

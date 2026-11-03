@@ -254,7 +254,7 @@ a {
 /* ---------- Sections ---------- */
 
 .section {
-  margin-top: 112px;
+  margin-top: 144px;
   scroll-margin-top: 90px;
 }
 
@@ -548,7 +548,7 @@ a {
   }
 
   .section {
-    margin-top: 88px;
+    margin-top: 112px;
   }
 
   .workflow {

@@ -20,7 +20,8 @@ stylesheet, so the content paints before React loads; React then hydrates it.
 
 All the content lives in `src/data/`:
 
-- `profile.json`: name, location, photo, CV and links (email, LinkedIn, GitHub).
+- `profile.json`: name, location, career start, photo, CV and links (email, LinkedIn, GitHub).
+  The years of experience in the hero are calculated from `careerStart` (`YYYY-MM`).
 - `experience.json`: jobs shown in Experience, with their highlights and tags.
 - `workflow.json`: tools shown in Workflow and what each one is used for.
 - `projects.json`: personal projects.

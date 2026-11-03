@@ -1,18 +1,21 @@
 import profile from '../data/profile.json'
 import { asset } from '../asset.js'
+import { useYearsOfExperience } from '../useYearsOfExperience.js'
 
 export default function Hero() {
+  const years = useYearsOfExperience(profile.careerStart)
+
   return (
     <header className="hero">
       <div className="hero-top">
         <img className="avatar" src={asset(profile.photo)} alt={profile.name} width="76" height="76" />
         <h1>
-          Hi, I'm <span>{profile.firstName}</span>.
+          Hi, I'm <span>{profile.name}</span>.
         </h1>
       </div>
       <p className="lead">
-        I'm a <b>software developer</b> based in {profile.location}, with 5 years of experience in
-        the industry.
+        I'm a <b>software developer</b> based in {profile.location}, with {years} years of experience
+        in the industry.
       </p>
       <p className="lead">
         AI helps us deliver software faster than ever. My mission is to bring{' '}
