@@ -6,7 +6,10 @@ const YEAR = new Date().getFullYear()
 export default function Footer() {
   return (
     <footer className="footer">
-      © {YEAR} {profile.name}
+      <span>
+        © {YEAR} {profile.name}
+      </span>
+      <a href="#top">Back to top</a>
     </footer>
   )
 }

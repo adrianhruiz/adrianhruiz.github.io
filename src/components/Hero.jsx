@@ -1,44 +1,31 @@
 import profile from '../data/profile.json'
 import { asset } from '../asset.js'
 import { useYearsOfExperience } from '../useYearsOfExperience.js'
+import ContactLinks from './ContactLinks.jsx'
 
 export default function Hero() {
   const years = useYearsOfExperience(profile.careerStart)
+  const [firstName, ...lastNames] = profile.name.split(' ')
 
   return (
-    <header className="hero">
+    <header className="hero" id="top">
+      {/* The facts come first and small; the mission is the one sentence that stands out */}
+      <p className="hero-facts">
+        <span>Software developer</span>
+        <span>{profile.location}</span>
+        <span>{years} years</span>
+      </p>
       <div className="hero-top">
-        <img className="avatar" src={asset(profile.photo)} alt={profile.name} width="76" height="76" />
+        <img className="avatar" src={asset(profile.photo)} alt="" width="76" height="76" />
         <h1>
-          Hi, I'm <span>{profile.name}</span>.
+          {firstName} <span>{lastNames.join(' ')}</span>
         </h1>
       </div>
-      <p className="lead">
-        I'm a <b>software developer</b> based in {profile.location}, with {years} years of experience
-        in the industry.
+      <p className="mission">
+        I bring <em>quality, security and control</em> to AI-assisted software delivery, so what
+        ships fast is also production&#8209;ready.
       </p>
-      <p className="lead">
-        AI helps us deliver software faster than ever. My mission is to bring{' '}
-        <b>quality, security and control</b> to that process, making the software
-        production&#8209;ready.
-      </p>
-      <div className="actions">
-        <a className="btn btn--primary" href={profile.links.email}>
-          Get in touch
-        </a>
-        <a className="btn" href={profile.links.linkedin} target="_blank" rel="noreferrer">
-          LinkedIn
-        </a>
-        <a className="btn" href={profile.links.github} target="_blank" rel="noreferrer">
-          GitHub
-        </a>
-        {/* Shown once a CV file is set in profile.json */}
-        {profile.cv && (
-          <a className="btn" href={asset(profile.cv)} download>
-            Download CV
-          </a>
-        )}
-      </div>
+      <ContactLinks />
     </header>
   )
 }

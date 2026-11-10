@@ -21,12 +21,18 @@ stylesheet, so the content paints before React loads; React then hydrates it.
 All the content lives in `src/data/`:
 
 - `profile.json`: name, location, career start, photo, CV and links (email, LinkedIn, GitHub).
-  The years of experience in the hero are calculated from `careerStart` (`YYYY-MM`).
-- `experience.json`: jobs shown in Experience, with their highlights and tags.
-- `workflow.json`: tools shown in Workflow and what each one is used for.
+  The years of experience in the hero are calculated from `careerStart` (`YYYY-MM`). The meta and
+  Open Graph descriptions in `index.html` get the same number at build time: the `__YEARS__`
+  placeholder is replaced in `scripts/prerender.js`.
+- `experience.json`: jobs shown in Experience, with their highlights and tags. Each job has
+  `start` and `end` (`YYYY-MM`; `end: null` means Present); the period and the duration are
+  calculated from them. A job with `"earlier": true` is shown as a one-line "Earlier:" note
+  under the timeline.
+- `workflow.json`: ordered steps shown in Workflow, each with `title`, `text` and optional `tools`.
 - `projects.json`: personal projects.
 
-The hero and Workflow texts are in `src/components/Hero.jsx` and `src/components/Workflow.jsx`.
+The only hand-written hero copy is in `src/components/Hero.jsx`; the Workflow copy lives in
+`workflow.json` and the closing block copy in `src/components/Contact.jsx`.
 
 ### CV
 

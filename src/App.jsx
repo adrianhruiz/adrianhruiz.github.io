@@ -3,6 +3,7 @@ import Hero from './components/Hero.jsx'
 import Experience from './components/Experience.jsx'
 import Workflow from './components/Workflow.jsx'
 import Projects from './components/Projects.jsx'
+import Contact from './components/Contact.jsx'
 import Footer from './components/Footer.jsx'
 
 export default function App() {
@@ -16,6 +17,7 @@ export default function App() {
           <Workflow />
           <Experience />
           <Projects />
+          <Contact />
         </main>
         <Footer />
       </div>

@@ -20,8 +20,10 @@ if (!stylesheet) {
 const css = await readFile(`dist/${stylesheet[1]}`, 'utf8')
 html = html.replace(stylesheet[0], () => `<style>${css}</style>`)
 
-const { render } = await import('../dist-server/entry-server.js')
+const { render, years } = await import('../dist-server/entry-server.js')
 html = html.replace(PLACEHOLDER, () => render())
+// The meta description and its link-preview copy carry the years of experience too
+html = html.replaceAll('__YEARS__', String(years))
 
 await writeFile('dist/index.html', html)
 await rm('dist-server', { recursive: true, force: true })

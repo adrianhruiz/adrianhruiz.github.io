@@ -1,27 +1,25 @@
 import workflow from '../data/workflow.json'
 import Section from './Section.jsx'
+import Tags from './Tags.jsx'
 
+// The steps follow the order the work happens in, with each tool attached to its step
 export default function Workflow() {
   return (
     <Section id="workflow" title="Workflow">
-      <ul className="workflow">
-        {workflow.map((tool) => (
-          <li key={tool.name}>
-            <strong>{tool.name}</strong>
-            <span>{tool.use}</span>
+      <ol className="steps">
+        {workflow.map((step, index) => (
+          <li key={step.title}>
+            <span className="step-number" aria-hidden="true">
+              {String(index + 1).padStart(2, '0')}
+            </span>
+            <div>
+              <h3>{step.title}</h3>
+              <p>{step.text}</p>
+              <Tags items={step.tools} variant="tools" />
+            </div>
           </li>
         ))}
-      </ul>
-      <div className="workflow-text">
-        <p>
-          In my experience, much of the development time is won in requirements and analysis: a
-          well-understood problem is easier to deliver with quality and&nbsp;speed.
-        </p>
-        <p>
-          Once I understand it, I use AI to dig deeper, surfacing <b>edge&nbsp;cases</b> and a
-          second point of view to build a <b>robust</b>&nbsp;solution.
-        </p>
-      </div>
+      </ol>
     </Section>
   )
 }

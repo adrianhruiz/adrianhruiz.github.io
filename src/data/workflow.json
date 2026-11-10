@@ -1,5 +1,20 @@
 [
-  { "name": "Spec-Driven Development", "use": "Specifying before building" },
-  { "name": "Orca", "use": "Orchestrating agents" },
-  { "name": "Claude Code", "use": "Analyzing and writing code" }
+  {
+    "title": "Understand",
+    "text": "Most development time is won in requirements and analysis: a well-understood problem is easier to deliver with quality and speed."
+  },
+  {
+    "title": "Specify",
+    "text": "Specifying before building, so the work has a clear target.",
+    "tools": ["Spec-Driven Development"]
+  },
+  {
+    "title": "Build with agents",
+    "text": "Orchestrating agents that analyze and write code.",
+    "tools": ["Orca", "Claude Code"]
+  },
+  {
+    "title": "Challenge it",
+    "text": "AI as a second point of view to surface edge cases and make the solution robust."
+  }
 ]
