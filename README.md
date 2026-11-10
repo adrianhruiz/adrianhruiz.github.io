@@ -50,8 +50,8 @@ Fonts are self-hosted in `public/fonts/`, subset to the characters the site uses
 `scripts/fonts.sh` downloads and subsets them again (it needs `uv`); add any new symbol
 used in the copy to its `UNICODES` list first.
 
-Project screenshots and the avatar are served as resized WebP variants. After adding or
-replacing an image, run `scripts/optimize-images.sh` (it needs ImageMagick).
+The avatar is served as a resized WebP variant. After replacing it, run
+`scripts/optimize-images.sh` (it needs ImageMagick).
 
 ### Adding a project
 
