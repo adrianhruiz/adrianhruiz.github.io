@@ -1,7 +1,6 @@
 import profile from '../data/profile.json'
 import { asset } from '../asset.js'
 import { useYearsOfExperience } from '../useYearsOfExperience.js'
-import ContactLinks from './ContactLinks.jsx'
 
 export default function Hero() {
   const years = useYearsOfExperience(profile.careerStart)
@@ -25,7 +24,21 @@ export default function Hero() {
         I bring <em>quality, security and control</em> to AI-assisted software delivery, so what
         ships fast is also production&#8209;ready.
       </p>
-      <ContactLinks />
+      {/* Social profiles live here; the email is offered once, in the closing block */}
+      <div className="actions">
+        <a className="btn btn--primary" href={profile.links.linkedin} target="_blank" rel="noreferrer">
+          LinkedIn
+        </a>
+        <a className="btn" href={profile.links.github} target="_blank" rel="noreferrer">
+          GitHub
+        </a>
+        {/* Shown once a CV file is set in profile.json */}
+        {profile.cv && (
+          <a className="btn" href={asset(profile.cv)} download>
+            Download CV
+          </a>
+        )}
+      </div>
     </header>
   )
 }

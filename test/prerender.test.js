@@ -19,3 +19,13 @@ test('the prerendered nav has no scroll state, so hydration matches', () => {
   assert.ok(!root.includes('aria-current'))
   assert.ok(!root.includes('nav-mark'))
 })
+
+test('the hero links to the social profiles and the closing block to the email, once each', () => {
+  const hero = root.slice(root.indexOf('<header'), root.indexOf('</header>'))
+  const contact = root.slice(root.indexOf('id="contact"'), root.indexOf('</section>', root.indexOf('id="contact"')))
+  assert.ok(hero.includes('linkedin.com') && hero.includes('github.com/adrianhruiz"'))
+  assert.ok(!hero.includes('mailto:'))
+  assert.ok(contact.includes('href="mailto:groveh8@gmail.com"'))
+  assert.ok(contact.includes('>groveh8@gmail.com<'))
+  assert.ok(!contact.includes('linkedin.com') && !contact.includes('github.com'))
+})

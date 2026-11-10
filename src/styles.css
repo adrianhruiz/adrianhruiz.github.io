@@ -649,7 +649,19 @@ a {
 }
 
 .contact .actions {
+  align-items: center;
   margin-top: 20px;
+}
+
+.contact-email {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--sky);
+  text-underline-offset: 4px;
+}
+
+.contact-email:hover {
+  color: var(--gold);
 }
 
 /* ---------- Footer ---------- */
