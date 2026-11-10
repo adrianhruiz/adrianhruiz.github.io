@@ -49,25 +49,21 @@ replacing an image, run `scripts/optimize-images.sh` (it needs ImageMagick).
 
 ### Adding a project
 
-Add an entry to `src/data/projects.json` and put the image in `public/projects/`:
+Add an entry to `src/data/projects.json`. No image is needed: the card is generated.
 
 ```json
 {
   "title": "My project",
   "description": "What it does and why I built it.",
+  "language": "TypeScript",
   "url": "https://my-project.example",
-  "repo": "https://github.com/adrianhruiz/my-project",
-  "image": {
-    "src": "projects/my-project.jpg",
-    "width": 1440,
-    "height": 900,
-    "widths": [480, 960, 1440]
-  }
+  "repo": "https://github.com/adrianhruiz/my-project"
 }
 ```
 
-The card opens `url` when it is set, otherwise `repo`. Images keep their own aspect ratio, so
-`width` and `height` must match the real file to avoid layout shifts.
+The card opens `url` when it is set, otherwise `repo`. `language` tints the card glow: the known
+ones are javascript, kotlin, typescript, python and php (the `.project--<language>` rules in
+`src/styles.css`); any other language uses the default glow.
 
 ## Deploy
 
