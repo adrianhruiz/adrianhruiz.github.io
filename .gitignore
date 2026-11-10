@@ -26,3 +26,6 @@ dist-ssr
 
 # Vite cache
 .vite
+
+# Local design explorations (gentle-design canvas)
+design/
