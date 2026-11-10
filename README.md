@@ -12,6 +12,7 @@ npm run dev
 ```
 
 `npm run lint` checks the code with oxlint and `npm run build` generates the site in `dist/`.
+`npm test` builds the site and runs the tests in `test/` with Node's test runner.
 
 The build prerenders the page to static HTML (`scripts/prerender.js`) and inlines the
 stylesheet, so the content paints before React loads; React then hydrates it.
